@@ -1,0 +1,104 @@
+// 1. Process representation
+#ifndef PROCESS_H
+#define PROCESS_H
+
+#include <string>
+
+class Process{
+public: 
+	// which category the process is in
+	enum State {
+		READY, //ready state is not shown *not using a core
+		RUNNING, //running state will be shown w the info
+		FINISHED, //afterwards, it moves to the finished list of states
+	};
+	
+	// a process has ff attributes:
+	int id; //id for unique process
+	std::string name; //name of the process ('process_'+id)
+	State state; //state of the process
+	int core; //which core its using
+	std::string datetime; //date in mmddyy format + military time w seconds
+	int current; //current instruction line
+	int total; //total instruction lines
+
+};
+
+#endif
+
+/********************************/
+// 2. which instruction line is being executed
+#ifndef INSTRUCTION_H
+#define INSTRUCTION_H
+
+#include "Process.h"
+
+class Instruction {
+public: 
+
+	// increment the current line
+	void nextLine(Process& p);
+
+	// Print the current line number being executed
+	void printCurrent(const Process& p);
+
+	// done executing last instruction line (true when current == total)
+	bool isDone(const Process& p);
+
+};
+
+#endif
+
+/********************************/
+// 3. store N processes effectively, should be traversable in linear time
+#ifndef PROCESS_STORE_H
+#define PROCESS_STORE_H
+
+#include "Process.h"
+
+class ProcessStore {
+public:
+
+	// add process to a queue
+	void add(const Process& p); // queue will be used to store most effectively and linearly
+
+	// returns N, how many processes are stored
+	int size() const;
+
+
+private:
+	// holds the processes
+	std::vector<Process> processes_; 
+};
+
+#endif
+
+/********************************/
+// 4. store and retrieve in O(1)
+#ifndef PROCESS_GET_H
+#define PROCESS_GET_H
+
+#include "Process.h"
+
+class ProcessGet{
+public:
+	// store using a queue
+	void add(const Process& p);
+
+	// retrieve frontmost process in order of the queue
+	Process dequeue();
+
+	// retrieve specifically the ith process
+	Process& get(int i);
+
+	int size() const;
+
+	// track if empty
+	bool empty() const;
+	
+
+private:
+	std::vector<Process> processes_;
+};
+
+#endif
