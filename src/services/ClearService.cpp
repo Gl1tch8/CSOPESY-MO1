@@ -1,9 +1,12 @@
-#include "Service.cpp"
+#include "Service.hpp"
+#include <string>
 class ClearService : public Service {
     public: 
-    
+
         ClearService() {}
 
-        void printOutput() {}
+        void executeFlags(std::string) {
+            
+        }
 
 }
