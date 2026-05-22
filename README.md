@@ -13,3 +13,25 @@ Entry class file: -
 ---
 /class activities - put the class activities related to the MO1 here
 format: <Week#><Surname> <Topic>
+
+
+
+
+random code notes:
+int main()
+{
+    std::cout << "HEADING";
+
+    ConsoleManager consoleManager;
+    consoleManager.setCursorPosition(0, 1);
+}
+
+
+
+void ConsoleManager::setCursorPosition (int posX, int posY) const
+{
+    COORD coord;
+    coord.X = posX;
+    coord.Y = posY;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
