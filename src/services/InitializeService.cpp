@@ -1,11 +1,11 @@
 #include "../interfaces/Service.hpp"
 #include <string>
-class ClearService : public Service {
+class InitializeService : public Service {
     public: 
 
-        ClearService():Service() {}
+        InitializeService():Service() {}
 
-        std::string executeFlags(std::string input)  {
+        std::string executeFlags(std::string input) {
             return input + " command recognized. Doing something.";
         }
 

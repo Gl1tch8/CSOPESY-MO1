@@ -1,11 +1,9 @@
 
 #include "../interfaces/Command.hpp"
-#include "../services/InitializeService.cpp"
-class InitializeCommand : public Command {
+#include "../services/ReportUtilService.cpp"
+class ReportUtilCommand : public Command {
     public:
-
-        InitializeCommand(InitializeService *service) : Command(*service) {}
-
+        ReportUtilCommand(ReportUtilService *service) : Command(*service) {}
         void print(std::string log) {
             std::cout << log << std::endl;
         }

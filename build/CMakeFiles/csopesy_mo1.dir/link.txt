@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/csopesy_mo1.dir/link.d CMakeFiles/csopesy_mo1.dir/src/main.cpp.o -o csopesy_mo1

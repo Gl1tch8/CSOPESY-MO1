@@ -11,6 +11,6 @@ public:
      * the needed logic based on it
      * returns output log
      */
-    virtual std::string executeFlags(std::string input);
+    virtual std::string executeFlags(std::string input) = 0;
 };
 

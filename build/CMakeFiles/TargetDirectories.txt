@@ -1,3 +1,0 @@
-/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles/csopesy_mo1.dir
-/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles/edit_cache.dir
-/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles/rebuild_cache.dir
