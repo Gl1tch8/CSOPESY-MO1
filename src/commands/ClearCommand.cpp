@@ -1,6 +1,6 @@
 
 #include "../interfaces/Command.hpp"
-#include "../services/ClearService.cpp" //example: change this to /include/ClearService.hpp
+#include "../include/serviceshpp/ClearService.hpp" //example: change this to /include/ClearService.hpp
 
 // libraries for sleep
 #include <chrono>

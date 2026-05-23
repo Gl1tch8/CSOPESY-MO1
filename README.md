@@ -15,8 +15,6 @@ Entry class file: -
 format: <Week#><Surname> <Topic>
 
 ## TODO:
-- make ascii for "CSOPESY" 
-- make input loop
 - for each cpp file, make a header file and put them in /include
     - then, replace the .cpp to .hpp for EACH file (For example, check ClearCommand.cpp)
 
