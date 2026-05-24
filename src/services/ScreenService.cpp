@@ -1,12 +1,7 @@
-#include "../interfaces/Service.hpp"
-#include <string>
-class ScreenService : public Service {
-    public: 
+#include "../include/serviceshpp/ScreenService.hpp"
 
-        ScreenService():Service() {}
+ScreenService::ScreenService() :Service() {}
 
-        std::string executeFlags(std::string input) {
-            return input + " command recognized. Doing something.";
-        }
-
-};
+std::string ScreenService::executeFlags(std::string input) {
+    return input + " command recognized. Doing something.";
+}

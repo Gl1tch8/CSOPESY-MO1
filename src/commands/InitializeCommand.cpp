@@ -1,19 +1,12 @@
+#include "../../include/commandshpp/InitializeCommand.hpp" 
 
-#include "../interfaces/Command.hpp"
-#include "../services/InitializeService.cpp"
-class InitializeCommand : public Command {
-    public:
+InitializeCommand::InitializeCommand(InitializeService* service) : Command(*service) {}
 
-        InitializeCommand(InitializeService *service) : Command(*service) {}
+void InitializeCommand::print(std::string log) {
+    std::cout << log << std::endl;
+}
 
-        void print(std::string log) {
-            std::cout << log << std::endl;
-        }
-
-        void execute(std::string input) {
-            //do something
-            std::string log = this->service.executeFlags(input);
-            this->print(log);
-        }
-};
-
+void InitializeCommand::execute(std::string input) {
+    std::string log = this->service.executeFlags(input);
+    this->print(log);
+}

@@ -1,17 +1,15 @@
+#include "../../include/commandshpp/ScreenCommand.hpp" 
+#include <iostream>
 
-#include "../interfaces/Command.hpp"
-#include "../services/ScreenService.cpp"
-class ScreenCommand : public Command {
-    public:
-        ScreenCommand(ScreenService *service) : Command(*service) {}
-        void print(std::string log) {
-            std::cout << log << std::endl;
-        }
+ScreenCommand::ScreenCommand(ScreenService *service) : Command(*service) {}
 
-        void execute(std::string input) {
-            //do something
-            std::string log = this->service.executeFlags(input);
-            this->print(log);
-        }
-};
+void ScreenCommand::print(std::string log) {
+    std::cout << log << std::endl;
+}
+
+void ScreenCommand::execute(std::string input) {
+    //do something
+    std::string log = this->service.executeFlags(input);
+    this->print(log);
+}
 

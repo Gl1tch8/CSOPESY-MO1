@@ -1,12 +1,7 @@
-#include "../interfaces/Service.hpp"
-#include <string>
-class InitializeService : public Service {
-    public: 
+#include "../include/serviceshpp/InitializeService.hpp"
 
-        InitializeService():Service() {}
+InitializeService::InitializeService() :Service() {}
 
-        std::string executeFlags(std::string input) {
-            return input + " command recognized. Doing something.";
-        }
-
-};
+std::string InitializeService::executeFlags(std::string input) {
+    return input + " command recognized. Doing something.";
+}

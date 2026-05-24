@@ -1,13 +1,7 @@
-#include "../interfaces/Service.hpp"
-#include <string>
+#include "../include/serviceshpp/ExitService.hpp"
 
-class ExitService : public Service {
-    public: 
+ExitService::ExitService() :Service() {}
 
-        ExitService():Service() {}
-
-        std::string executeFlags(std::string input){
-            return input + " command recognized. Doing something.";
-        }
-
-};
+std::string ExitService::executeFlags(std::string input) {
+    return input + " command recognized. Doing something.";
+}

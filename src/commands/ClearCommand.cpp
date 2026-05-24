@@ -1,29 +1,15 @@
+#include "../../include/commandshpp/ClearCommand.hpp" 
 
-#include "../interfaces/Command.hpp"
-#include "../include/serviceshpp/ClearService.hpp" //example: change this to /include/ClearService.hpp
+ClearCommand::ClearCommand(ClearService* service) : Command(*service) {}
 
-// libraries for sleep
-#include <chrono>
-#include <thread>
+void ClearCommand::print(std::string log) {
+    std::cout << log << std::endl;
+}
 
+void ClearCommand::execute(std::string input) {
+    std::string log = this->service.executeFlags(input);
+    this->print(log);
+    std::this_thread::sleep_for(std::chrono::seconds(1));
 
-class ClearCommand : public Command {
-    public:
-        ClearCommand(ClearService *service) : Command(*service) {}
-
-        void print(std::string log) {
-            std::cout << log << std::endl;
-        }
-
-        void execute(std::string input) {
-            //do something
-            std::string log = this->service.executeFlags(input);
-            this->print(log);
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-            
-            system("cls"); //clear the screen
-
-            
-        }
-};
-
+    system("cls"); //clear the screen
+}

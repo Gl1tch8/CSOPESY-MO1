@@ -1,12 +1,7 @@
-#include "../interfaces/Service.hpp"
-#include <string>
-class SchedulerService : public Service {
-    public: 
+#include "../include/serviceshpp/SchedulerService.hpp"
 
-        SchedulerService():Service() {}
+SchedulerService::SchedulerService() :Service() {}
 
-        std::string executeFlags(std::string input) {
-            return input + " command recognized. Doing something.";
-        }
-
-};
+std::string SchedulerService::executeFlags(std::string input) {
+    return input + " command recognized. Doing something.";
+}
