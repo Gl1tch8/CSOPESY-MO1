@@ -1,5 +1,5 @@
 #include "../../src/interfaces/Command.hpp"
-#include "../../include/serviceshpp/InitializeService.hpp"
+#include "../../include/services/InitializeService.hpp"
 
 // libraries for sleep
 #include <chrono>

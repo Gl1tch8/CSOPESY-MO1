@@ -1,4 +1,4 @@
-#include "../../include/commandshpp/ClearCommand.hpp" 
+#include "../../include/commands/ClearCommand.hpp" 
 
 ClearCommand::ClearCommand(ClearService* service) : Command(*service) {}
 

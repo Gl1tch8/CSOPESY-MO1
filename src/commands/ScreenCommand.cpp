@@ -1,4 +1,4 @@
-#include "../../include/commandshpp/ScreenCommand.hpp" 
+#include "../../include/commands/ScreenCommand.hpp" 
 #include <iostream>
 
 ScreenCommand::ScreenCommand(ScreenService *service) : Command(*service) {}

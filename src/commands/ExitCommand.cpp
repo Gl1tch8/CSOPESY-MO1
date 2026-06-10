@@ -1,4 +1,4 @@
-#include "../../include/commandshpp/ExitCommand.hpp" 
+#include "../../include/commands/ExitCommand.hpp" 
 
 ExitCommand::ExitCommand(ExitService* service) : Command(*service) {}
 

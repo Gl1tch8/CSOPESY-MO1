@@ -1,4 +1,4 @@
-#include "../../include/commandshpp/SchedulerCommand.hpp" 
+#include "../../include/commands/SchedulerCommand.hpp" 
 
 SchedulerCommand::SchedulerCommand(SchedulerService *service) : Command(*service) {}
 

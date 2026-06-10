@@ -1,4 +1,4 @@
-#include "../../include/commandshpp/InitializeCommand.hpp" 
+#include "../../include/commands/InitializeCommand.hpp" 
 
 InitializeCommand::InitializeCommand(InitializeService* service) : Command(*service) {}
 
