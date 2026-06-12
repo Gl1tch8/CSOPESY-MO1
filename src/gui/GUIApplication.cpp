@@ -63,6 +63,9 @@ bool GUIApplication::init() {
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glslVersion);
 
+    // Load GUI assets like the wallpaper texture
+    desktop->loadResources();
+
     initialized = true;
     return true;
 }

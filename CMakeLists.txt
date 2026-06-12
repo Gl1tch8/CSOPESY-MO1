@@ -36,15 +36,20 @@ target_include_directories(imgui PUBLIC
     ${IMGUI_DIR}/backends
 )
 
-# --- GLFW (system install; prefer CMake config, fall back to pkg-config) ---
-find_package(glfw3 QUIET)
-if(glfw3_FOUND)
-    target_link_libraries(imgui PUBLIC glfw)
-else()
-    find_package(PkgConfig REQUIRED)
-    pkg_check_modules(GLFW REQUIRED IMPORTED_TARGET glfw3)
-    target_link_libraries(imgui PUBLIC PkgConfig::GLFW)
-endif()
+# --- GLFW (FetchContent for cross-platform portability) ---
+include(FetchContent)
+FetchContent_Declare(
+    glfw
+    GIT_REPOSITORY https://github.com/glfw/glfw.git
+    GIT_TAG 3.3.8
+)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(glfw)
+
+target_link_libraries(imgui PUBLIC glfw)
 
 # --- Platform OpenGL ---
 if(APPLE)

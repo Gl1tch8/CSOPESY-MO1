@@ -30,18 +30,39 @@ void Desktop::draw() {
     ImGui::End();
 }
 
+#include "TextureLoader.hpp"
+
+void Desktop::loadResources() {
+    // Try multiple possible paths to find the wallpaper
+    const char* paths[] = {
+        "src/gui/guimg/GUIwallpaper.jpg",           // Running from project root
+        "../../src/gui/guimg/GUIwallpaper.jpg",     // Running from out/build/
+        "../../../src/gui/guimg/GUIwallpaper.jpg",  // Running from out/build/x64-Debug
+        "GUIwallpaper.jpg"                          // If copied to the exe folder
+    };
+
+    for (const char* path : paths) {
+        wallpaperTexture = TextureLoader::loadTexture(path, wallpaperWidth, wallpaperHeight);
+        if (wallpaperTexture != 0) break;
+    }
+}
+
 void Desktop::drawWallpaper() {
-    // Vertical gradient drawn directly via the window draw list — no texture
-    // asset needed. Deep indigo at the top fading to a teal at the bottom.
     ImDrawList* drawList = ImGui::GetWindowDrawList();
     ImVec2 size = ImGui::GetIO().DisplaySize;
 
-    const ImU32 top = IM_COL32(28, 32, 64, 255);
-    const ImU32 bottom = IM_COL32(36, 84, 96, 255);
+    if (wallpaperTexture != 0) {
+        // Draw the loaded image texture
+        drawList->AddImage((void*)(intptr_t)wallpaperTexture, ImVec2(0, 0), size);
+    } else {
+        // Fallback: Vertical gradient drawn directly via the window draw list.
+        const ImU32 top = IM_COL32(28, 32, 64, 255);
+        const ImU32 bottom = IM_COL32(36, 84, 96, 255);
 
-    drawList->AddRectFilledMultiColor(
-        ImVec2(0, 0), size,
-        top, top, bottom, bottom);
+        drawList->AddRectFilledMultiColor(
+            ImVec2(0, 0), size,
+            top, top, bottom, bottom);
+    }
 }
 
 void Desktop::drawClock() {
