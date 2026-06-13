@@ -84,9 +84,9 @@ void GUIApplication::setupImGui() {
 void GUIApplication::run() {
     if (!initialized) return;
 
-    // Loop until the Desktop PWR button requests shutdown. A native window
-    // close (X / Cmd+Q) is intentionally ignored so the app can only be
-    // closed via the PWR button, per the requirement.
+    // Loop until the Desktop PWR button requests shutdown.A native window close (X / Cmd+Q) is intentionally ignored so the app can only be
+    // closed via the PWR button.
+
     while (!desktop->shutdownRequested()) {
         glfwPollEvents();
 

@@ -1,7 +1,7 @@
 #pragma once
 
-// Component 1: the Desktop (see imgui.pdf "The Desktop").
-// Full-screen base layer rendered first each frame: gradient wallpaper,
+// Component 1: the Desktop.
+// Full-screen base layer rendered first each frame: wallpaper/gradient wallpaper,
 // a live clock, and a PWR (shutdown) button that is the only way to quit.
 class Desktop {
 public:

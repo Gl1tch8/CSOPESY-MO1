@@ -22,7 +22,7 @@ void SettingsUI::draw() {
     ImGui::Spacing();
     ImGui::Separator();
     if (ImGui::Button("Apply")) {
-        // Placeholder — nothing is persisted.
+        // Placeholder — does nothing yet.
     }
     ImGui::SameLine();
     if (ImGui::Button("Close")) {

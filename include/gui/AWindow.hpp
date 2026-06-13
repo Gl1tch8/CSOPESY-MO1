@@ -4,9 +4,8 @@
 
 #include "imgui.h"
 
-// Abstract base class for every closable window in the mockup
-// (see imgui.pdf section 8). Subclasses implement draw(); beginWindow()/
-// endWindow() keep ImGui::Begin()/End() balanced and honor visibility.
+// Abstract base class for every closable window in the console
+// Subclasses implement draw(); beginWindow()/ endWindow()
 class AWindow {
 public:
     explicit AWindow(const std::string& name)

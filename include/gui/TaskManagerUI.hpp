@@ -7,7 +7,7 @@
 
 #include "AWindow.hpp"
 
-// Component 3: a Windows-style Task Manager (see imgui.pdf "Task Manager").
+// Component 3: a Windows-style Task Manager.
 // Tabbed window with live Performance graphs and a sortable process table.
 // All data is dummy/placeholder.
 class TaskManagerUI : public AWindow {

@@ -33,7 +33,7 @@ void Desktop::draw() {
 #include "TextureLoader.hpp"
 
 void Desktop::loadResources() {
-    // Try multiple possible paths to find the wallpaper
+    // Multiple possible paths to find the wallpaper
     const char* paths[] = {
         "src/gui/guimg/GUIwallpaper.jpg",           // Running from project root
         "../../src/gui/guimg/GUIwallpaper.jpg",     // Running from out/build/
@@ -108,8 +108,7 @@ void Desktop::drawLauncher() {
 }
 
 void Desktop::drawPowerButton() {
-    // PWR / shutdown button in the top-left corner. Clicking it is the only
-    // sanctioned way to close the application.
+    // Shutdown button in the top-left corner. Clicking it is the only way to close the application.
     float margin = 20.0f * UIConfig::getScaleFactor();
     ImGui::SetCursorPos(ImVec2(margin, margin));
 

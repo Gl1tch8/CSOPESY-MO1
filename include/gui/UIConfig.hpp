@@ -2,7 +2,7 @@
 
 #include "imgui.h"
 
-// DPI / resolution scaling helper (see imgui.pdf section 9).
+// DPI / resolution scaling helper.
 // Computes a global scale factor from the primary monitor width so that UI
 // elements stay a consistent physical size across different resolutions.
 class UIConfig {

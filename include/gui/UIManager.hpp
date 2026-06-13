@@ -6,7 +6,7 @@
 
 #include "AWindow.hpp"
 
-// Singleton registry of all windows (see imgui.pdf section 8). Mirrors how a
+// Singleton registry of all windows. Mirrors how a
 // real OS compositor (DWM / WindowServer / Wayland) tracks window lifecycle.
 class UIManager {
 public:

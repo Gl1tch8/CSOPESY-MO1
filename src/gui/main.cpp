@@ -7,8 +7,7 @@
 #include "SettingsUI.hpp"
 #include "TaskManagerUI.hpp"
 
-// Entry point for the CSOPESY desktop-style OS mockup. The console scheduler
-// has its own entry point in src/main.cpp; this is a separate executable.
+// Entry point for the GUI part, the console scheduler has its own entry point in src/main.cpp; this is a separate executable.
 int main() {
     GUIApplication app;
     if (!app.init()) {

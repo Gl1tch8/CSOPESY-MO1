@@ -82,7 +82,7 @@ void TaskManagerUI::updatePerformanceData() {
     cpu = std::clamp(cpu, 0.0f, 100.0f);
     mem = std::clamp(mem, 0.0f, 100.0f);
 
-    // Shift left and append (circular-buffer style from the PDF).
+    // Shift left and append.
     for (size_t i = 0; i + 1 < cpuHistory.size(); ++i) {
         cpuHistory[i] = cpuHistory[i + 1];
     }
