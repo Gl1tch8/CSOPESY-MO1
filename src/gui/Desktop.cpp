@@ -6,7 +6,6 @@
 
 #include "TimeUtil.hpp"
 #include "UIConfig.hpp"
-#include "UIManager.hpp"
 
 void Desktop::draw() {
     // Create a borderless full-screen window pinned behind everything else.
@@ -25,7 +24,6 @@ void Desktop::draw() {
     drawWallpaper();
     drawClock();
     drawPowerButton();
-    drawLauncher();
 
     ImGui::End();
 }
@@ -35,8 +33,8 @@ void Desktop::draw() {
 void Desktop::loadResources() {
     // Multiple possible paths to find the wallpaper
     const char* paths[] = {
-        "src/gui/guimg/GUIwallpaper.jpg",           // Running from project root
-        "../../src/gui/guimg/GUIwallpaper.jpg",     // Running from out/build/
+        "assets/GUIwallpaper.jpg",           // Running from project root
+        "../assets/GUIwallpaper.jpg",     // Running from out/build/
         "../../../src/gui/guimg/GUIwallpaper.jpg",  // Running from out/build/x64-Debug
         "GUIwallpaper.jpg"                          // If copied to the exe folder
     };
@@ -74,37 +72,6 @@ void Desktop::drawClock() {
 
     ImGui::SetCursorPos(pos);
     ImGui::TextColored(ImVec4(1, 1, 1, 1), "%s", timeStr.c_str());
-}
-
-void Desktop::drawLauncher() {
-    // Desktop "icons": large launcher buttons that open each application.
-    // These complement the taskbar buttons with an obvious entry point.
-    float margin = 20.0f * UIConfig::getScaleFactor();
-    float top = 90.0f * UIConfig::getScaleFactor();
-    ImVec2 btnSize = UIConfig::scale(ImVec2(140, 56));
-    float spacing = 14.0f * UIConfig::getScaleFactor();
-
-    struct App { const char* label; const char* window; };
-    const App apps[] = {
-        {"Task Manager", "Task Manager"},
-        {"Settings",     "Settings"},
-        {"About",        "About"},
-    };
-
-    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.20f, 0.28f, 0.42f, 0.95f));
-    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.28f, 0.40f, 0.60f, 1.0f));
-    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.34f, 0.50f, 0.74f, 1.0f));
-
-    int i = 0;
-    for (const App& app : apps) {
-        ImGui::SetCursorPos(ImVec2(margin, top + i * (btnSize.y + spacing)));
-        if (ImGui::Button(app.label, btnSize)) {
-            UIManager::getInstance().showWindow(app.window);
-        }
-        ++i;
-    }
-
-    ImGui::PopStyleColor(3);
 }
 
 void Desktop::drawPowerButton() {

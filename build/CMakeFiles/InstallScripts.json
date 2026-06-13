@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/cmake_install.cmake",
+		"/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-build/cmake_install.cmake",
+		"/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-build/src/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

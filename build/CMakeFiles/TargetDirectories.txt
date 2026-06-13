@@ -1,0 +1,11 @@
+/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles/csopesy_mo1.dir
+/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles/imgui.dir
+/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles/csopesy_gui.dir
+/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles/edit_cache.dir
+/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles/rebuild_cache.dir
+/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-build/CMakeFiles/edit_cache.dir
+/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-build/CMakeFiles/rebuild_cache.dir
+/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-build/src/CMakeFiles/update_mappings.dir
+/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-build/src/CMakeFiles/glfw.dir
+/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-build/src/CMakeFiles/edit_cache.dir
+/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-build/src/CMakeFiles/rebuild_cache.dir

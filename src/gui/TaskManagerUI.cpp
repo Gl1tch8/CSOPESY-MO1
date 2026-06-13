@@ -1,7 +1,6 @@
 #include "TaskManagerUI.hpp"
 
 #include <algorithm>
-#include <cmath>
 
 const char* TaskManagerUI::getStateName(ProcessState state) {
     switch (state) {
@@ -24,9 +23,7 @@ ImVec4 TaskManagerUI::getStateColor(ProcessState state) {
 }
 
 TaskManagerUI::TaskManagerUI()
-    : AWindow("Task Manager"),
-      cpuHistory(90, 0.0f),
-      memoryHistory(90, 0.0f) {
+    : AWindow("Task Manager") {
     // Seed a placeholder process table with dummy values.
     processes = {
         {1,    "kernel_task",   ProcessState::RUNNING,    12.4f,  148213},
@@ -43,10 +40,6 @@ void TaskManagerUI::draw() {
     if (!this->beginWindow()) return;
 
     if (ImGui::BeginTabBar("TaskManagerTabs")) {
-        if (ImGui::BeginTabItem("Performance")) {
-            drawPerformanceTab();
-            ImGui::EndTabItem();
-        }
         if (ImGui::BeginTabItem("Processes")) {
             drawProcessesTab();
             ImGui::EndTabItem();
@@ -55,43 +48,6 @@ void TaskManagerUI::draw() {
     }
 
     this->endWindow();
-}
-
-void TaskManagerUI::drawPerformanceTab() {
-    // Refresh the sliding-window buffers before plotting.
-    updatePerformanceData();
-
-    ImGui::Text("CPU Usage");
-    ImGui::PlotLines("##CPU", cpuHistory.data(), static_cast<int>(cpuHistory.size()),
-                     0, nullptr, 0.0f, 100.0f, ImVec2(0, 80));
-
-    ImGui::Spacing();
-
-    ImGui::Text("Memory Usage");
-    ImGui::PlotLines("##Memory", memoryHistory.data(), static_cast<int>(memoryHistory.size()),
-                     0, nullptr, 0.0f, 100.0f, ImVec2(0, 80));
-}
-
-void TaskManagerUI::updatePerformanceData() {
-    ++tick;
-
-    // Deterministic dummy waveforms so the graphs visibly animate each frame.
-    float t = static_cast<float>(tick) * 0.05f;
-    float cpu = 50.0f + 35.0f * std::sin(t) + 8.0f * std::sin(t * 3.7f);
-    float mem = 55.0f + 20.0f * std::sin(t * 0.3f);
-    cpu = std::clamp(cpu, 0.0f, 100.0f);
-    mem = std::clamp(mem, 0.0f, 100.0f);
-
-    // Shift left and append.
-    for (size_t i = 0; i + 1 < cpuHistory.size(); ++i) {
-        cpuHistory[i] = cpuHistory[i + 1];
-    }
-    cpuHistory.back() = cpu;
-
-    for (size_t i = 0; i + 1 < memoryHistory.size(); ++i) {
-        memoryHistory[i] = memoryHistory[i + 1];
-    }
-    memoryHistory.back() = mem;
 }
 
 void TaskManagerUI::sortProcesses(ImGuiTableSortSpecs* specs) {

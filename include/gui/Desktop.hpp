@@ -15,7 +15,6 @@ private:
     void drawWallpaper();
     void drawClock();
     void drawPowerButton();
-    void drawLauncher();
 
     bool powerOff = false;
     unsigned int wallpaperTexture = 0;

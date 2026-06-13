@@ -2,7 +2,6 @@
 
 #include "imgui.h"
 
-#include "TimeUtil.hpp"
 #include "UIConfig.hpp"
 #include "UIManager.hpp"
 
@@ -14,17 +13,26 @@ void Taskbar::draw() {
     ImGui::SetNextWindowPos(ImVec2(0, displaySize.y - taskbarHeight));
     ImGui::SetNextWindowSize(ImVec2(displaySize.x, taskbarHeight));
 
+    // NOTE: no NoBringToFrontOnFocus here. That flag belongs only to the
+    // full-screen Desktop background window; if the Taskbar also had it, it
+    // would share the "always at back" layer and get hidden behind the Desktop.
     ImGui::Begin("Taskbar", nullptr,
                  ImGuiWindowFlags_NoTitleBar |
                  ImGuiWindowFlags_NoResize |
                  ImGuiWindowFlags_NoMove |
                  ImGuiWindowFlags_NoCollapse |
-                 ImGuiWindowFlags_NoScrollbar |
-                 ImGuiWindowFlags_NoBringToFrontOnFocus);
+                 ImGuiWindowFlags_NoScrollbar);
 
     ImVec2 btnSize = UIConfig::scale(ImVec2(120, 36));
 
-    // Three required buttons. Two open custom screens, the third the Task Manager.
+    // Vertically center the row of buttons within the taskbar height.
+    float verticalPad = (taskbarHeight - btnSize.y) * 0.5f;
+    if (verticalPad > 0.0f) {
+        ImGui::SetCursorPosY(verticalPad);
+    }
+
+    // Three required buttons laid out horizontally (each on the same line).
+    // Two open custom screens, the third the Task Manager.
     if (ImGui::Button("Settings", btnSize)) {
         UIManager::getInstance().showWindow("Settings");
     }
@@ -37,20 +45,5 @@ void Taskbar::draw() {
         UIManager::getInstance().showWindow("Task Manager");
     }
 
-    drawSystemTray();
-
     ImGui::End();
-}
-
-void Taskbar::drawSystemTray() {
-    // Right-aligned tray with dummy CPU/MEM readings and the live clock.
-    float trayWidth = 320.0f * UIConfig::getScaleFactor();
-    ImGui::SameLine(ImGui::GetWindowWidth() - trayWidth);
-
-    // Dummy placeholder utilisation values.
-    ImGui::Text("CPU: %.1f%%", 37.5f);
-    ImGui::SameLine();
-    ImGui::Text("MEM: %.1f%%", 52.0f);
-    ImGui::SameLine();
-    ImGui::Text("%s", getCurrentTimeString().c_str());
 }
