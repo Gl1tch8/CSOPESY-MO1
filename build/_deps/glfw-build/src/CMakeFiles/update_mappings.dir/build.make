@@ -44,19 +44,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/bin/cmake
+CMAKE_COMMAND = /opt/homebrew/bin/cmake
 
 # The command to remove a file.
-RM = /usr/bin/cmake -E rm -f
+RM = /opt/homebrew/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1
+CMAKE_SOURCE_DIR = /Users/johnliong/Desktop/CSOPESY-MO1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build
+CMAKE_BINARY_DIR = /Users/johnliong/Desktop/CSOPESY-MO1/build
 
 # Utility rule file for update_mappings.
 
@@ -67,8 +67,8 @@ include _deps/glfw-build/src/CMakeFiles/update_mappings.dir/compiler_depend.make
 include _deps/glfw-build/src/CMakeFiles/update_mappings.dir/progress.make
 
 _deps/glfw-build/src/CMakeFiles/update_mappings:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Updating gamepad mappings from upstream repository"
-	cd /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-src/src && /usr/bin/cmake -P /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-src/CMake/GenerateMappings.cmake mappings.h.in mappings.h
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/Users/johnliong/Desktop/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Updating gamepad mappings from upstream repository"
+	cd /Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-src/src && /opt/homebrew/bin/cmake -P /Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-src/CMake/GenerateMappings.cmake mappings.h.in mappings.h
 
 _deps/glfw-build/src/CMakeFiles/update_mappings.dir/codegen:
 .PHONY : _deps/glfw-build/src/CMakeFiles/update_mappings.dir/codegen
@@ -82,10 +82,10 @@ _deps/glfw-build/src/CMakeFiles/update_mappings.dir/build: update_mappings
 .PHONY : _deps/glfw-build/src/CMakeFiles/update_mappings.dir/build
 
 _deps/glfw-build/src/CMakeFiles/update_mappings.dir/clean:
-	cd /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-build/src && $(CMAKE_COMMAND) -P CMakeFiles/update_mappings.dir/cmake_clean.cmake
+	cd /Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-build/src && $(CMAKE_COMMAND) -P CMakeFiles/update_mappings.dir/cmake_clean.cmake
 .PHONY : _deps/glfw-build/src/CMakeFiles/update_mappings.dir/clean
 
 _deps/glfw-build/src/CMakeFiles/update_mappings.dir/depend:
-	cd /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1 /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-src/src /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-build/src /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-build/src/CMakeFiles/update_mappings.dir/DependInfo.cmake "--color=$(COLOR)" update_mappings
+	cd /Users/johnliong/Desktop/CSOPESY-MO1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/johnliong/Desktop/CSOPESY-MO1 /Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-src/src /Users/johnliong/Desktop/CSOPESY-MO1/build /Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-build/src /Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-build/src/CMakeFiles/update_mappings.dir/DependInfo.cmake "--color=$(COLOR)" update_mappings
 .PHONY : _deps/glfw-build/src/CMakeFiles/update_mappings.dir/depend
 

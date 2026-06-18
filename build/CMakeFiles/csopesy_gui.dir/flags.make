@@ -4,7 +4,9 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/include -I/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/include/gui -I/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/lib/imgui-1.92.8 -I/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/lib/imgui-1.92.8/backends -I/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-src/include
+CXX_INCLUDES = -I/Users/johnliong/Desktop/CSOPESY-MO1/include -I/Users/johnliong/Desktop/CSOPESY-MO1/include/gui -I/Users/johnliong/Desktop/CSOPESY-MO1/lib/imgui-1.92.8 -I/Users/johnliong/Desktop/CSOPESY-MO1/lib/imgui-1.92.8/backends -I/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-src/include
 
-CXX_FLAGS = -std=c++17
+CXX_FLAGSarm64 = -std=c++17 -arch arm64
+
+CXX_FLAGS = -std=c++17 -arch arm64
 

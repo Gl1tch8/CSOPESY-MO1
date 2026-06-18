@@ -18,18 +18,18 @@ project(glfw-populate NONE)
 
 # Pass through things we've already detected in the main project to avoid
 # paying the cost of redetecting them again in ExternalProject_Add()
-set(GIT_EXECUTABLE [==[/usr/bin/git]==])
-set(Git_VERSION [==[2.51.2]==])
+set(GIT_EXECUTABLE [==[/usr/local/bin/git]==])
+set(Git_VERSION [==[2.15.0]==])
 set_property(GLOBAL PROPERTY _CMAKE_FindGit_GIT_EXECUTABLE_VERSION
-  [==[/usr/bin/git;2.51.2]==]
+  [==[/usr/local/bin/git;2.15.0]==]
 )
 
 
 include(ExternalProject)
 ExternalProject_Add(glfw-populate
                      "UPDATE_DISCONNECTED" "False" "GIT_REPOSITORY" "https://github.com/glfw/glfw.git" "EXTERNALPROJECT_INTERNAL_ARGUMENT_SEPARATOR" "GIT_TAG" "3.3.8"
-                    SOURCE_DIR          "/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-src"
-                    BINARY_DIR          "/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-build"
+                    SOURCE_DIR          "/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-src"
+                    BINARY_DIR          "/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-build"
                     CONFIGURE_COMMAND   ""
                     BUILD_COMMAND       ""
                     INSTALL_COMMAND     ""

@@ -44,19 +44,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/bin/cmake
+CMAKE_COMMAND = /opt/homebrew/bin/cmake
 
 # The command to remove a file.
-RM = /usr/bin/cmake -E rm -f
+RM = /opt/homebrew/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1
+CMAKE_SOURCE_DIR = /Users/johnliong/Desktop/CSOPESY-MO1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build
+CMAKE_BINARY_DIR = /Users/johnliong/Desktop/CSOPESY-MO1/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/csopesy_gui.dir/depend.make
@@ -73,144 +73,144 @@ CMakeFiles/csopesy_gui.dir/codegen:
 .PHONY : CMakeFiles/csopesy_gui.dir/codegen
 
 CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.o: CMakeFiles/csopesy_gui.dir/flags.make
-CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.o: /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/AboutUI.cpp
+CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.o: /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/AboutUI.cpp
 CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.o: CMakeFiles/csopesy_gui.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.o -c /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/AboutUI.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/johnliong/Desktop/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.o -c /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/AboutUI.cpp
 
 CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/AboutUI.cpp > CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/AboutUI.cpp > CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.i
 
 CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/AboutUI.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/AboutUI.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/AboutUI.cpp.s
 
 CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.o: CMakeFiles/csopesy_gui.dir/flags.make
-CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.o: /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/Desktop.cpp
+CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.o: /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/Desktop.cpp
 CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.o: CMakeFiles/csopesy_gui.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.o -c /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/Desktop.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/johnliong/Desktop/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.o -c /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/Desktop.cpp
 
 CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/Desktop.cpp > CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/Desktop.cpp > CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.i
 
 CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/Desktop.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/Desktop.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/Desktop.cpp.s
 
 CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.o: CMakeFiles/csopesy_gui.dir/flags.make
-CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.o: /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/GUIApplication.cpp
+CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.o: /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/GUIApplication.cpp
 CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.o: CMakeFiles/csopesy_gui.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.o -c /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/GUIApplication.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/johnliong/Desktop/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.o -c /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/GUIApplication.cpp
 
 CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/GUIApplication.cpp > CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/GUIApplication.cpp > CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.i
 
 CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/GUIApplication.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/GUIApplication.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/GUIApplication.cpp.s
 
 CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.o: CMakeFiles/csopesy_gui.dir/flags.make
-CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.o: /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/SettingsUI.cpp
+CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.o: /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/SettingsUI.cpp
 CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.o: CMakeFiles/csopesy_gui.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.o -c /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/SettingsUI.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/johnliong/Desktop/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.o -c /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/SettingsUI.cpp
 
 CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/SettingsUI.cpp > CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/SettingsUI.cpp > CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.i
 
 CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/SettingsUI.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/SettingsUI.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/SettingsUI.cpp.s
 
 CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.o: CMakeFiles/csopesy_gui.dir/flags.make
-CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.o: /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/TaskManagerUI.cpp
+CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.o: /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/TaskManagerUI.cpp
 CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.o: CMakeFiles/csopesy_gui.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.o -c /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/TaskManagerUI.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/johnliong/Desktop/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.o -c /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/TaskManagerUI.cpp
 
 CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/TaskManagerUI.cpp > CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/TaskManagerUI.cpp > CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.i
 
 CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/TaskManagerUI.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/TaskManagerUI.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/TaskManagerUI.cpp.s
 
 CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.o: CMakeFiles/csopesy_gui.dir/flags.make
-CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.o: /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/Taskbar.cpp
+CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.o: /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/Taskbar.cpp
 CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.o: CMakeFiles/csopesy_gui.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.o -c /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/Taskbar.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/johnliong/Desktop/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.o -c /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/Taskbar.cpp
 
 CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/Taskbar.cpp > CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/Taskbar.cpp > CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.i
 
 CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/Taskbar.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/Taskbar.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/Taskbar.cpp.s
 
 CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.o: CMakeFiles/csopesy_gui.dir/flags.make
-CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.o: /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/TextureLoader.cpp
+CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.o: /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/TextureLoader.cpp
 CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.o: CMakeFiles/csopesy_gui.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.o -c /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/TextureLoader.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/johnliong/Desktop/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.o -c /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/TextureLoader.cpp
 
 CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/TextureLoader.cpp > CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/TextureLoader.cpp > CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.i
 
 CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/TextureLoader.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/TextureLoader.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/TextureLoader.cpp.s
 
 CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.o: CMakeFiles/csopesy_gui.dir/flags.make
-CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.o: /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/UIConfig.cpp
+CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.o: /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/UIConfig.cpp
 CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.o: CMakeFiles/csopesy_gui.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.o -c /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/UIConfig.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/johnliong/Desktop/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.o -c /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/UIConfig.cpp
 
 CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/UIConfig.cpp > CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/UIConfig.cpp > CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.i
 
 CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/UIConfig.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/UIConfig.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.s
 
 CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.o: CMakeFiles/csopesy_gui.dir/flags.make
-CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.o: /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/UIManager.cpp
+CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.o: /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/UIManager.cpp
 CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.o: CMakeFiles/csopesy_gui.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.o -c /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/UIManager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/johnliong/Desktop/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.o -c /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/UIManager.cpp
 
 CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/UIManager.cpp > CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/UIManager.cpp > CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.i
 
 CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/UIManager.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/UIManager.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.s
 
 CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.o: CMakeFiles/csopesy_gui.dir/flags.make
-CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.o: /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/main.cpp
+CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.o: /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/main.cpp
 CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.o: CMakeFiles/csopesy_gui.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.o -c /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/johnliong/Desktop/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.o -MF CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.o.d -o CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.o -c /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/main.cpp
 
 CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/main.cpp > CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/main.cpp > CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.i
 
 CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/src/gui/main.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/johnliong/Desktop/CSOPESY-MO1/src/gui/main.cpp -o CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.s
 
 # Object files for target csopesy_gui
 csopesy_gui_OBJECTS = \
@@ -239,16 +239,10 @@ csopesy_gui: CMakeFiles/csopesy_gui.dir/src/gui/UIConfig.cpp.o
 csopesy_gui: CMakeFiles/csopesy_gui.dir/src/gui/UIManager.cpp.o
 csopesy_gui: CMakeFiles/csopesy_gui.dir/src/gui/main.cpp.o
 csopesy_gui: CMakeFiles/csopesy_gui.dir/build.make
-csopesy_gui: CMakeFiles/csopesy_gui.dir/compiler_depend.ts
 csopesy_gui: libimgui.a
 csopesy_gui: _deps/glfw-build/src/libglfw3.a
-csopesy_gui: /usr/lib/librt.a
-csopesy_gui: /usr/lib/libm.so
-csopesy_gui: /usr/lib/libX11.so
-csopesy_gui: /usr/lib/libGLX.so
-csopesy_gui: /usr/lib/libOpenGL.so
 csopesy_gui: CMakeFiles/csopesy_gui.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable csopesy_gui"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/johnliong/Desktop/CSOPESY-MO1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable csopesy_gui"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/csopesy_gui.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -260,6 +254,6 @@ CMakeFiles/csopesy_gui.dir/clean:
 .PHONY : CMakeFiles/csopesy_gui.dir/clean
 
 CMakeFiles/csopesy_gui.dir/depend:
-	cd /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1 /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1 /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build /home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/CMakeFiles/csopesy_gui.dir/DependInfo.cmake "--color=$(COLOR)" csopesy_gui
+	cd /Users/johnliong/Desktop/CSOPESY-MO1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/johnliong/Desktop/CSOPESY-MO1 /Users/johnliong/Desktop/CSOPESY-MO1 /Users/johnliong/Desktop/CSOPESY-MO1/build /Users/johnliong/Desktop/CSOPESY-MO1/build /Users/johnliong/Desktop/CSOPESY-MO1/build/CMakeFiles/csopesy_gui.dir/DependInfo.cmake "--color=$(COLOR)" csopesy_gui
 .PHONY : CMakeFiles/csopesy_gui.dir/depend
 

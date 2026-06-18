@@ -3,11 +3,11 @@
 
 cmake_minimum_required(VERSION ${CMAKE_VERSION}) # this file comes with cmake
 
-if(EXISTS "/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitclone-lastrun.txt" AND EXISTS "/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitinfo.txt" AND
-  "/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitclone-lastrun.txt" IS_NEWER_THAN "/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitinfo.txt")
+if(EXISTS "/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitclone-lastrun.txt" AND EXISTS "/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitinfo.txt" AND
+  "/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitclone-lastrun.txt" IS_NEWER_THAN "/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitinfo.txt")
   message(VERBOSE
     "Avoiding repeated git clone, stamp file is up to date: "
-    "'/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitclone-lastrun.txt'"
+    "'/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitclone-lastrun.txt'"
   )
   return()
 endif()
@@ -22,12 +22,12 @@ else()
 endif()
 
 execute_process(
-  COMMAND ${CMAKE_COMMAND} -E rm -rf "/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-src"
+  COMMAND ${CMAKE_COMMAND} -E rm -rf "/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-src"
   RESULT_VARIABLE error_code
   ${maybe_show_command}
 )
 if(error_code)
-  message(FATAL_ERROR "Failed to remove directory: '/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-src'")
+  message(FATAL_ERROR "Failed to remove directory: '/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-src'")
 endif()
 
 # try the clone 3 times in case there is an odd git clone issue
@@ -35,9 +35,9 @@ set(error_code 1)
 set(number_of_tries 0)
 while(error_code AND number_of_tries LESS 3)
   execute_process(
-    COMMAND "/usr/bin/git"
+    COMMAND "/usr/local/bin/git"
             clone --no-checkout --config "advice.detachedHead=false" "https://github.com/glfw/glfw.git" "glfw-src"
-    WORKING_DIRECTORY "/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps"
+    WORKING_DIRECTORY "/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps"
     RESULT_VARIABLE error_code
     ${maybe_show_command}
   )
@@ -51,9 +51,9 @@ if(error_code)
 endif()
 
 execute_process(
-  COMMAND "/usr/bin/git"
+  COMMAND "/usr/local/bin/git"
           checkout "3.3.8" --
-  WORKING_DIRECTORY "/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-src"
+  WORKING_DIRECTORY "/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-src"
   RESULT_VARIABLE error_code
   ${maybe_show_command}
 )
@@ -64,24 +64,24 @@ endif()
 set(init_submodules TRUE)
 if(init_submodules)
   execute_process(
-    COMMAND "/usr/bin/git" 
+    COMMAND "/usr/local/bin/git" 
             submodule update --recursive --init 
-    WORKING_DIRECTORY "/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-src"
+    WORKING_DIRECTORY "/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-src"
     RESULT_VARIABLE error_code
     ${maybe_show_command}
   )
 endif()
 if(error_code)
-  message(FATAL_ERROR "Failed to update submodules in: '/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-src'")
+  message(FATAL_ERROR "Failed to update submodules in: '/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-src'")
 endif()
 
 # Complete success, update the script-last-run stamp file:
 #
 execute_process(
-  COMMAND ${CMAKE_COMMAND} -E copy "/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitinfo.txt" "/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitclone-lastrun.txt"
+  COMMAND ${CMAKE_COMMAND} -E copy "/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitinfo.txt" "/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitclone-lastrun.txt"
   RESULT_VARIABLE error_code
   ${maybe_show_command}
 )
 if(error_code)
-  message(FATAL_ERROR "Failed to copy script-last-run stamp file: '/home/Renzo/Coding/DLSU/CSOPESY/CSOPESY-MO1/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitclone-lastrun.txt'")
+  message(FATAL_ERROR "Failed to copy script-last-run stamp file: '/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitclone-lastrun.txt'")
 endif()

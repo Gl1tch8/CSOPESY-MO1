@@ -1,0 +1,3 @@
+/Users/johnliong/Desktop/CSOPESY-MO1/class activities/week 6/build/CMakeFiles/app.dir
+/Users/johnliong/Desktop/CSOPESY-MO1/class activities/week 6/build/CMakeFiles/edit_cache.dir
+/Users/johnliong/Desktop/CSOPESY-MO1/class activities/week 6/build/CMakeFiles/rebuild_cache.dir
