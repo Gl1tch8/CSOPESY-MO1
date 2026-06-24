@@ -9,11 +9,14 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Console application (original CSOPESY scheduler CLI)
 # Globs every src/*.cpp EXCEPT the GUI mockup under src/gui/.
 # ---------------------------------------------------------------------------
+find_package(Curses REQUIRED)
+
 file(GLOB_RECURSE CONSOLE_SOURCES CONFIGURE_DEPENDS "src/*.cpp")
 list(FILTER CONSOLE_SOURCES EXCLUDE REGEX "/gui/")
 
 add_executable(csopesy_mo1 ${CONSOLE_SOURCES})
-target_include_directories(csopesy_mo1 PRIVATE include)
+target_include_directories(csopesy_mo1 PRIVATE include ${CURSES_INCLUDE_DIRS})
+target_link_libraries(csopesy_mo1 PRIVATE ${CURSES_LIBRARIES})
 
 # ---------------------------------------------------------------------------
 # GUI mockup (Dear ImGui + GLFW + OpenGL) — separate, additive target.

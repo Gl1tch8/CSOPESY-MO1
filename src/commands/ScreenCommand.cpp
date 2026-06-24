@@ -10,6 +10,8 @@ void ScreenCommand::print(std::string log) {
 void ScreenCommand::execute(std::string input) {
     //do something
     std::string log = this->service.executeFlags(input);
-    this->print(log);
+    if (!log.empty()) {
+        this->print(log);
+    }
 }
 

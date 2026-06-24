@@ -8,5 +8,5 @@
 #include "commands/ScreenCommand.hpp"
 
 
-#include "Helper.hpp"
-#include "SystemState.hpp"
+#include "misc/Helper.hpp"
+#include "misc/SystemState.hpp"

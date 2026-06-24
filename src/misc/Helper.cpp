@@ -1,4 +1,4 @@
-#include "../../include/Helper.hpp"
+#include "../../include/misc/Helper.hpp"
 
 
     std::string Helper::parse(std::string input) {
