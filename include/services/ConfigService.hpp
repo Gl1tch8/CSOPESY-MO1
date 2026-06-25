@@ -6,7 +6,7 @@ struct Config {
     uint32_t quantumCycles;
     uint32_t cpuCount;
     uint32_t batchProcessFreq;
-    uint32_t mixIns;
+    uint32_t minIns;
     uint32_t maxIns;
     uint32_t delayPerSec;
 };

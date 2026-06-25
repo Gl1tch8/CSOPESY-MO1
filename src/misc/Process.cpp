@@ -1,5 +1,6 @@
 #include "../../include/misc/Process.hpp"
 #include "Core.hpp"
+
 // Compatibility constructor
 Process::Process(std::string name, int pid, std::string startTime, int coreId, int currentLine, int totalLines, bool isFinished)
     : startTimeStr(startTime) {
@@ -70,4 +71,116 @@ std::string Process::getStartTimeStr() const {
         return startTimeStr;
     }
     return std::to_string(info.startTime);
+}
+
+void Process::appendOutput(const std::string& line) {
+    std::unique_lock lock(outputMutex);
+    outputLog.push_back(line);
+}
+
+std::string Process::getOutput() const {
+    std::unique_lock lock(outputMutex);
+    std::ostringstream ss;
+    for (const auto& line : outputLog) {
+        ss << line << "\n";
+    }
+    return ss.str();
+}
+
+static uint16_t clamp16(uint32_t val) {
+    return static_cast<uint16_t>(std::min(val, static_cast<uint32_t>(UINT16_MAX)));
+}
+
+void Process::executeInstructions(uint64_t& tick, std::atomic<bool>& running) {
+    SymbolTable& sym = info.symbolTable;
+    executeBlock(info.instructions, sym, tick, running);
+}
+
+void Process::executeBlock(const std::vector<Instruction>& instructions, SymbolTable& sym, uint64_t& tick, std::atomic<bool>& running) {
+    for (const auto& instr : instructions) {
+        if (!running) return;
+
+        switch (instr.opCode) {
+
+        case OperationCode::DECLARE: {
+            std::string var = instr.operands[0];
+            uint16_t val = static_cast<uint16_t>(std::stoul(instr.operands[1]));
+            sym.setSymbol(var, val);
+            info.currentLineIndex++;
+            tick++;
+            break;
+        }
+
+        case OperationCode::PRINT: {
+            std::string msg = instr.operands[0];
+            // Replace variable reference if present
+            // Format: "Hello world from <name>!" or "Value from: " + var
+            if (!msg.empty() && msg[0] != '"') {
+                // it's a variable
+                uint16_t val = sym.getSymbol(msg);
+                appendOutput(std::to_string(val));
+            } else {
+                // strip quotes
+                std::string out = msg;
+                if (out.size() >= 2 && out.front() == '"' && out.back() == '"') {
+                    out = out.substr(1, out.size() - 2);
+                }
+                appendOutput(out);
+            }
+            info.currentLineIndex++;
+            tick++;
+            break;
+        }
+
+        case OperationCode::ADD: {
+            std::string dest = instr.operands[0];
+            uint16_t a = isdigit(instr.operands[1][0]) 
+                ? static_cast<uint16_t>(std::stoul(instr.operands[1])) 
+                : sym.getSymbol(instr.operands[1]);
+            uint16_t b = isdigit(instr.operands[2][0]) 
+                ? static_cast<uint16_t>(std::stoul(instr.operands[2])) 
+                : sym.getSymbol(instr.operands[2]);
+            sym.setSymbol(dest, clamp16(static_cast<uint32_t>(a) + static_cast<uint32_t>(b)));
+            info.currentLineIndex++;
+            tick++;
+            break;
+        }
+
+        case OperationCode::SUBTRACT: {
+            std::string dest = instr.operands[0];
+            uint16_t a = isdigit(instr.operands[1][0]) 
+                ? static_cast<uint16_t>(std::stoul(instr.operands[1])) 
+                : sym.getSymbol(instr.operands[1]);
+            uint16_t b = isdigit(instr.operands[2][0]) 
+                ? static_cast<uint16_t>(std::stoul(instr.operands[2])) 
+                : sym.getSymbol(instr.operands[2]);
+            uint32_t result = static_cast<uint32_t>(a) >= static_cast<uint32_t>(b) 
+                ? a - b : 0; // clamp at 0
+            sym.setSymbol(dest, static_cast<uint16_t>(result));
+            info.currentLineIndex++;
+            tick++;
+            break;
+        }
+
+        case OperationCode::SLEEP: {
+            uint8_t sleepTicks = static_cast<uint8_t>(std::stoul(instr.operands[0]));
+            for (uint8_t s = 0; s < sleepTicks && running; ++s) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(1));
+                tick++;
+            }
+            info.currentLineIndex++;
+            break;
+        }
+
+        case OperationCode::FOR: {
+            uint8_t repeats = instr.repeats;
+            for (uint8_t r = 0; r < repeats && running; ++r) {
+                executeBlock(instr.body, sym, tick, running);
+            }
+            info.currentLineIndex++;
+            break;
+        }
+
+        }
+    }
 }

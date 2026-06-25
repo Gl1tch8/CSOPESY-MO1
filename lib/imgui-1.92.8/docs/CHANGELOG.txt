@@ -4107,7 +4107,7 @@ Other Changes:
   when spawning a window in a monitor with negative coordinates. (#5215, #3414) [@DimaKoltun]
 - Clipper: Fixed a regression in 1.86 when not calling clipper.End() and late destructing the
   clipper instance. High-level languages (Lua,Rust etc.) would typically be affected. (#4822)
-- Layout: Fixed mixing up SameLine() and SetCursorPos() together from creating situations where line
+- Layout: Fixed minIng up SameLine() and SetCursorPos() together from creating situations where line
   height would be emitted from the wrong location (e.g. 'ItemA+SameLine()+SetCursorPos()+ItemB' would
   emit ItemA worth of height from the position of ItemB, which is not necessarily aligned with ItemA).
 - Sliders: An initial click within the knob/grab doesn't shift its position. (#1946, #5328)

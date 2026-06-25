@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <shared_mutex>
 #include "Process.hpp"
 #include "Core.hpp"
 
@@ -11,11 +12,15 @@ public:
 
     int getNumCores() const;
     const int getActiveCores() const;
-
+    int getCoresUsed() const;
+    int getCoresAvailable() const;
+    double getCpuUtilization() const;
 
     void addProcess(const Process& process);
     const std::vector<Process>& getRunningProcesses() const;
     const std::vector<Process>& getFinishedProcesses() const;
+    Process* getProcessByPid(int pid);
+    Process* getProcessByName(const std::string& name);
 
 
 private:
@@ -28,4 +33,6 @@ private:
 
     std::vector<Core> cores;
     std::vector<Process> processes;
+    mutable std::shared_mutex processMutex;
+
 };

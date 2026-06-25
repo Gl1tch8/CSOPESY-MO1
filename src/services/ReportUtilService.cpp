@@ -3,7 +3,8 @@
 #include <fstream>
 #include <sstream>
 
-ReportUtilService::ReportUtilService() : Service() {}
+// removed : Service()
+ReportUtilService::ReportUtilService() {}
 
 std::string ReportUtilService::executeFlags(std::string input) {
     SystemState& state = SystemState::getInstance();
@@ -29,11 +30,14 @@ std::string ReportUtilService::executeFlags(std::string input) {
 
     std::string report = ss.str();
 
+    // add ", std::ios::app" to overwrite 
     std::ofstream outFile("csopesy-log.txt");
     if (!outFile.is_open()) {
         return "Error: Could not open csopesy-log.txt for writing.";
     }
-    outFile << report;
+
+    // todo: can add the datetime so we can identify logs
+    outFile << "\n\n" << report;
     outFile.close();
 
     return "Report generated at csopesy-log.txt!";

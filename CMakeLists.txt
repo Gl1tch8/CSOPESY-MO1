@@ -16,6 +16,10 @@ add_executable(csopesy_mo1
     ${CONSOLE_SOURCES}
 )
 
+if(MSVC)
+    target_compile_options(csopesy_mo1 PRIVATE /FS)
+endif()
+
 target_include_directories(csopesy_mo1 PRIVATE
     "${PROJECT_SOURCE_DIR}/include"
     "${PROJECT_SOURCE_DIR}/include/misc"

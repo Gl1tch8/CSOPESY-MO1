@@ -11,12 +11,11 @@ Entry class file: -
 *Add a README.txt with your name and instructions on running your program. Also, indicate the entry class file where the main function is located. An alternative can be a GitHub link.*
 
 ---
-/class activities - put the class activities related to the MO1 here
-format: <Week#><Surname> <Topic>
-
+1. Delete csopesy-log.txt before starting
+- csoesy-log.txt doesnt overwrite but appends. can change in reportUtilService.cpp.
+2. Ctrl shift b to build, then press run
 ## TODO:
-- for each cpp file, make a header file and put them in /include
-    - then, replace the .cpp to .hpp for EACH file (For example, check ClearCommand.cpp)
+- 
 
 ### Demo notes:
 - video quality must be 480p - 720p

@@ -1,0 +1,64 @@
+
+
+CPU utilization: 0%
+Cores used: 0
+Cores available: 4
+-----------------------------------------
+Running processes:
+P1000  (0)  Core: 0  1 / 1000
+P1001  (0)  Core: 1  2 / 1000
+P1004  (0)  Core: 0  2 / 1000
+P1005  (0)  Core: 1  1 / 1000
+P1007  (0)  Core: 3  2 / 1000
+P1008  (0)  Core: 0  1 / 1000
+P1010  (0)  Core: 2  3 / 1000
+P1011  (0)  Core: 3  2 / 1000
+P1012  (0)  Core: 0  1 / 1000
+P1014  (0)  Core: 2  5 / 1000
+P1015  (0)  Core: 3  4 / 1000
+P1016  (0)  Core: 0  4 / 1000
+P1017  (0)  Core: 1  3 / 1000
+P1020  (0)  Core: 0  8 / 1000
+P1021  (0)  Core: 1  7 / 1000
+P1022  (0)  Core: 2  6 / 1000
+
+Finished processes:
+P1018  (0)  Finished  1000 / 1000
+P1019  (0)  Finished  1000 / 1000
+P1024  (0)  Finished  1000 / 1000
+P1025  (0)  Finished  1000 / 1000
+P1026  (0)  Finished  1000 / 1000
+
+
+CPU utilization: 0%
+Cores used: 0
+Cores available: 4
+-----------------------------------------
+Running processes:
+P1000  (0)  Core: 0  1 / 1000
+P1001  (0)  Core: 1  2 / 1000
+P1004  (0)  Core: 0  2 / 1000
+P1005  (0)  Core: 1  1 / 1000
+P1007  (0)  Core: 3  2 / 1000
+P1008  (0)  Core: 0  1 / 1000
+P1010  (0)  Core: 2  3 / 1000
+P1011  (0)  Core: 3  2 / 1000
+P1012  (0)  Core: 0  1 / 1000
+P1014  (0)  Core: 2  5 / 1000
+P1015  (0)  Core: 3  4 / 1000
+P1016  (0)  Core: 0  4 / 1000
+P1017  (0)  Core: 1  3 / 1000
+P1020  (0)  Core: 0  8 / 1000
+P1021  (0)  Core: 1  7 / 1000
+P1022  (0)  Core: 2  6 / 1000
+P1028  (0)  Core: 0  607 / 1000
+P1029  (0)  Core: 1  606 / 1000
+P1030  (0)  Core: 2  606 / 1000
+P1031  (0)  Core: 3  604 / 1000
+
+Finished processes:
+P1018  (0)  Finished  1000 / 1000
+P1019  (0)  Finished  1000 / 1000
+P1024  (0)  Finished  1000 / 1000
+P1025  (0)  Finished  1000 / 1000
+P1026  (0)  Finished  1000 / 1000

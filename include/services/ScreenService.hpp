@@ -36,6 +36,8 @@ public:
     private:
         //stores the process name and the process details as a pointer
         std::unordered_map<std::string, Process*> screens;
+
+        void executeBlock(const std::vector<Instruction>& instructions, SymbolTable& sym, uint64_t& tick, std::atomic<bool>& running);
 };
 
 class ScreenMuxService {

@@ -3,6 +3,11 @@
 #include <string>
 #include <vector>
 #include <chrono>
+#include <algorithm>
+#include <sstream>
+#include <mutex>
+
+#include "Core.hpp"
 #include "SymbolTable.hpp"
 enum class ProcessState {
     NEW,
@@ -102,9 +107,18 @@ public:
     void setIsFinished(bool finished);
     std::string getStartTimeStr() const;
 
+    void executeInstructions(uint64_t& tick, std::atomic<bool>& running);
+    std::string getOutput() const;
+    void appendOutput(const std::string& line);
+
+    
 private:
     ProcessInfo info;
     std::string startTimeStr;
+    void executeBlock(const std::vector<Instruction>& instructions, SymbolTable& sym, uint64_t& tick, std::atomic<bool>& running);
+    
+    std::vector<std::string> outputLog;
+    std::mutex outputMutex;
 };
 
 

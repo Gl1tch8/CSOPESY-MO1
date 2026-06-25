@@ -1,6 +1,8 @@
 #pragma once
 #include<cstdint>
 
+class Process;
+
 typedef uint64_t CPUTick;
 
 class Core {
@@ -11,6 +13,7 @@ public:
     int getId() const;
     bool isActive() const;
     void setActive(bool active);
+    void setId(int id);
     void setActiveProcess(Process *p);
 
     
@@ -18,5 +21,5 @@ public:
 private:
     int id = 0;
     bool active = false;
-    Process *process;
+    Process *process = nullptr;
 };

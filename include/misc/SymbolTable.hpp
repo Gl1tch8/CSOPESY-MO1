@@ -7,6 +7,12 @@
 #include<vector>
 #include<string>
 #include <cstdint>
+#include <atomic>
+#include <thread>
+#include <chrono>
+#include <algorithm>
+#include <stdexcept>
+#include <sstream>
 
 enum class OperationCode {
     PRINT,
@@ -21,10 +27,17 @@ enum class OperationCode {
 struct Instruction {
     OperationCode opCode;
     std::vector<std::string> operands;
+    std::vector<Instruction> body; // FOR loops
+    uint8_t repeats = 0; // for loops
+
 };
 
 class InstructionParser {
 public:
+    InstructionParser(SymbolTable& symbolTable, std::atomic<bool>& running, const std::string& processName);
+    void executeBlock(const std::vector<Instruction>& instructions, uint64_t& tick);
+    const std::vector<std::string>& getOutput() const;
+
     //parse the instruction string and return an Instruction struct
     Instruction parse(std::string line);
 
@@ -49,6 +62,12 @@ public:
     //loop for a certain number of iterations and execute the body of the loop
     void forLoop(std::vector<Instruction> body, uint16_t iterations);
 
+private:
+    SymbolTable& symbolTable;
+    std::atomic<bool>& running;
+    std::string processName;
+    std::vector<std::string> outputLog;
+    uint16_t resolveValue(const std::string& operand);
 };
 
 class SymbolTable {
