@@ -59,6 +59,10 @@ class Process {
 public:
     Process(ProcessInfo info) : info(info) {}
 
+    // copy constructor
+    Process(const Process& other)
+    : info(other.info), startTimeStr(other.startTimeStr), outputLog(other.outputLog) {}
+
     // Compatibility constructor
     Process(std::string name, int pid, std::string startTime, int coreId, int currentLine, int totalLines, bool isFinished);
 
@@ -118,7 +122,9 @@ private:
     void executeBlock(const std::vector<Instruction>& instructions, SymbolTable& sym, uint64_t& tick, std::atomic<bool>& running);
     
     std::vector<std::string> outputLog;
-    std::mutex outputMutex;
+
+    // mutable bc its used on getOutput, a const
+    mutable std::mutex outputMutex;
 };
 
 

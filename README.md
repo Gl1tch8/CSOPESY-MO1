@@ -14,8 +14,11 @@ Entry class file: -
 1. Delete csopesy-log.txt before starting
 - csoesy-log.txt doesnt overwrite but appends. can change in reportUtilService.cpp.
 2. Ctrl shift b to build, then press run
+
+
 ## TODO:
-- 
+processes got changed to a shared ptr to change everythig accordingly. reference is SystemState.cpp, screnservice
+- fix reportUtilService.cpp
 
 ### Demo notes:
 - video quality must be 480p - 720p

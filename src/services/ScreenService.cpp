@@ -32,29 +32,22 @@ std::string ScreenService::executeFlags(std::string input) {
         std::string name = tokens[2];
         return openSessionWindow(name);
     } 
-    else if (flag == "-r") {
+        else if (flag == "-r") {
         if (tokens.size() < 3) {
-            return "Error: screen -r requires a process name (e.g. screen -r process_name)";
+            return "Error: screen -r requires a process name.";
         }
         std::string name = tokens[2];
-
-                Process* proc = SystemState::getInstance().getProcessByName(name);
-                if (!proc) {
-                    return "Error: no process found with name " + name;
-                }
-                std::ostringstream out;
-                out << "Screen session: " << name << "\n";
-                out << "State: " << (proc->getIsFinished() ? "Finished" : "Running") << "\n";
-                out << "Progress: " << proc->getCurrentLine() << " / " << proc->getTotalLines() << "\n";
-                out << "--- Output ---\n";
-                out << proc->getOutput();
-                return out.str();
-        
-        auto it = screens.find(name);
-        if (it == screens.end()) {
-            return "Error: no session found for " + name;
+        auto proc = SystemState::getInstance().getProcessByName(name);
+        if (!proc) {
+            return "Error: no process found with name " + name;
         }
-        return "Reattached to session for " + name;
+        std::ostringstream out;
+        out << "Screen session: " << name << "\n";
+        out << "State: " << (proc->getIsFinished() ? "Finished" : "Running") << "\n";
+        out << "Progress: " << proc->getCurrentLine() << " / " << proc->getTotalLines() << "\n";
+        out << "--- Output ---\n";
+        out << proc->getOutput();
+        return out.str();
     }
 
     return "Error: Unrecognized screen flag '" + flag + "'";
@@ -74,15 +67,15 @@ std::string ScreenService::listProcesses() {
     output << "Running processes:\n";
 
     for (const auto& proc : state.getRunningProcesses()) {
-        output << proc.getName() << "  (" << proc.getStartTimeStr() << ")  Core: "
-               << proc.getCoreId() << "  " << proc.getCurrentLine() << " / "
-               << proc.getTotalLines() << "\n";
+        output << proc->getName() << "  (" << proc->getStartTimeStr() << ")  Core: "
+               << proc->getCoreId() << "  " << proc->getCurrentLine() << " / "
+               << proc->getTotalLines() << "\n";
     }
 
     output << "\nFinished processes:\n";
     for (const auto& proc : state.getFinishedProcesses()) {
-        output << proc.getName() << "  (" << proc.getStartTimeStr() << ")  Finished  "
-               << proc.getCurrentLine() << " / " << proc.getTotalLines() << "\n";
+        output << proc->getName() << "  (" << proc->getStartTimeStr() << ")  Finished  "
+            << proc->getCurrentLine() << " / " << proc->getTotalLines() << "\n";
     }
 
     return output.str();

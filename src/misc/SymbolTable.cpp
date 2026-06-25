@@ -1,4 +1,4 @@
-#include "SymbolTable.hpp";
+#include "SymbolTable.hpp"
 
 SymbolTable::SymbolTable() {
 }
@@ -123,7 +123,7 @@ void InstructionParser::forLoop(std::vector<Instruction> body, uint16_t iteratio
     }
 }
 
-// parse and execute are stubs — instructions are generated programmatically, not parsed from text
+// instructions are generated programmatically, not parsed from text
 Instruction InstructionParser::parse(std::string line) {
     Instruction instr;
     instr.opCode = OperationCode::PRINT;

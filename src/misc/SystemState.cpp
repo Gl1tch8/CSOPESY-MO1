@@ -1,8 +1,5 @@
 #include "../../include/misc/SystemState.hpp"
 #include "Core.hpp"
-#include <algorithm>
-#include <vector>
-#include <mutex>
 
 SystemState::SystemState() {}
 
@@ -14,29 +11,30 @@ SystemState& SystemState::getInstance() {
 
 void SystemState::addProcess(const Process& process) {
     std::unique_lock lock(processMutex);
-    this->processes.push_back(process);
+    this->processes.push_back(std::make_shared<Process>(process));
 }
 
 // read only
-const std::vector<Process>& SystemState::getRunningProcesses() const {
-    static std::vector<Process> list;
+const std::vector<std::shared_ptr<Process>>& SystemState::getRunningProcesses() const {
+    static std::vector<std::shared_ptr<Process>> list;
     list.clear();
     std::shared_lock lock(processMutex);
-    for (int i = 0; i < static_cast<int>(this->processes.size()); i++) {
-        if (processes[i].getState() == ProcessState::RUNNING) {
-            list.push_back(processes[i]);
+    for (const auto& p : this->processes) {
+        if (p && p->getState() == ProcessState::RUNNING) {
+            list.push_back(p);
         }
     }
     return list;
 }
+
 // read only
-const std::vector<Process>& SystemState::getFinishedProcesses() const {
-    static std::vector<Process> list;
+const std::vector<std::shared_ptr<Process>>& SystemState::getFinishedProcesses() const {
+    static std::vector<std::shared_ptr<Process>> list;
     list.clear();
     std::shared_lock lock(processMutex);
-    for (int i = 0; i < static_cast<int>(this->processes.size()); i++) {
-        if (processes[i].getState() == ProcessState::FINISHED) {
-            list.push_back(processes[i]);
+    for (const auto& p : this->processes) {
+        if (p && p->getState() == ProcessState::FINISHED) {
+            list.push_back(p);
         }
     }
     return list;
@@ -83,20 +81,18 @@ int SystemState::getNumCores() const {
     return this->cores.size();
 }
 
-Process* SystemState::getProcessByPid(int pid) {
+std::shared_ptr<Process> SystemState::getProcessByPid(int pid) {
     std::shared_lock lock(processMutex);
-    for (int i = 0; i < static_cast<int>(processes.size()); i++) {
-        if (processes[i].getPid() == pid) {
-            return &processes[i];
-        }
+    for (const auto& p : processes) {
+        if (p && p->getPid() == pid) return p;
     }
     return nullptr;
 }
 
-Process* SystemState::getProcessByName(const std::string& name) {
+std::shared_ptr<Process> SystemState::getProcessByName(const std::string& name) {
     std::shared_lock lock(processMutex);
     for (auto& p : processes) {
-        if (p.getName() == name) return &p;
+        if (p && p->getName() == name) return p;
     }
     return nullptr;
 }

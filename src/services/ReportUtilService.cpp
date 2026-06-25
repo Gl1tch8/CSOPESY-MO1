@@ -17,15 +17,15 @@ std::string ReportUtilService::executeFlags(std::string input) {
 
     ss << "Running processes:\n";
     for (const auto& proc : state.getRunningProcesses()) {
-        ss << proc.getName() << "  (" << proc.getStartTimeStr() << ")  Core: " << proc.getCoreId()
-           << "  " << proc.getCurrentLine() << " / " << proc.getTotalLines() << "\n";
+        ss << proc->getName() << "  (" << proc->getStartTimeStr() << ")  Core: " << proc->getCoreId()
+           << "  " << proc->getCurrentLine() << " / " << proc->getTotalLines() << "\n";
     }
     ss << "\n";
 
     ss << "Finished processes:\n";
     for (const auto& proc : state.getFinishedProcesses()) {
-        ss << proc.getName() << "  (" << proc.getStartTimeStr() << ")  Finished  "
-           << proc.getCurrentLine() << " / " << proc.getTotalLines() << "\n";
+        ss << proc->getName() << "  (" << proc->getStartTimeStr() << ")  Finished  "
+           << proc->getCurrentLine() << " / " << proc->getTotalLines() << "\n";
     }
 
     std::string report = ss.str();

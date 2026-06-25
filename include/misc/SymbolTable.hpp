@@ -1,13 +1,11 @@
 #pragma once
+
 #include <unordered_map>
+#include<vector>
 #include <string>
 #include <cstdint>
-
-#pragma once
-#include<vector>
-#include<string>
-#include <cstdint>
 #include <atomic>
+
 #include <thread>
 #include <chrono>
 #include <algorithm>
@@ -29,6 +27,18 @@ struct Instruction {
     std::vector<std::string> operands;
     std::vector<Instruction> body; // FOR loops
     uint8_t repeats = 0; // for loops
+
+};
+
+class SymbolTable {
+    public:
+        SymbolTable();
+
+        void setSymbol(std::string name, uint16_t value);
+        uint16_t getSymbol(std::string name);
+
+    private:
+        std::unordered_map<std::string, uint16_t> variableTable;
 
 };
 
@@ -70,15 +80,4 @@ private:
     uint16_t resolveValue(const std::string& operand);
 };
 
-class SymbolTable {
-    public:
-        SymbolTable();
-
-        void setSymbol(std::string name, uint16_t value);
-        uint16_t getSymbol(std::string name);
-
-    private:
-        std::unordered_map<std::string, uint16_t> variableTable;
-
-};
 

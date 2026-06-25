@@ -2,6 +2,10 @@
 
 #include <vector>
 #include <shared_mutex>
+#include <algorithm>
+#include <vector>
+#include <mutex>
+
 #include "Process.hpp"
 #include "Core.hpp"
 
@@ -17,10 +21,11 @@ public:
     double getCpuUtilization() const;
 
     void addProcess(const Process& process);
-    const std::vector<Process>& getRunningProcesses() const;
-    const std::vector<Process>& getFinishedProcesses() const;
-    Process* getProcessByPid(int pid);
-    Process* getProcessByName(const std::string& name);
+    const std::vector<std::shared_ptr<Process>>& getRunningProcesses() const;
+    const std::vector<std::shared_ptr<Process>>& getFinishedProcesses() const;
+
+    std::shared_ptr<Process> getProcessByPid(int pid);
+    std::shared_ptr<Process> getProcessByName(const std::string& name);
 
 
 private:
@@ -32,7 +37,9 @@ private:
     SystemState& operator=(const SystemState&) = delete;
 
     std::vector<Core> cores;
-    std::vector<Process> processes;
+    // std::vector<Process> processes;
+    // std::vector no work bc Process has a mutex (unmovable)
+    std::vector<std::shared_ptr<Process>> processes;
     mutable std::shared_mutex processMutex;
 
 };
