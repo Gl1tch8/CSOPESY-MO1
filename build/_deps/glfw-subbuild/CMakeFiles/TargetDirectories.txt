@@ -1,3 +1,0 @@
-/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-subbuild/CMakeFiles/glfw-populate.dir
-/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-subbuild/CMakeFiles/edit_cache.dir
-/Users/johnliong/Desktop/CSOPESY-MO1/build/_deps/glfw-subbuild/CMakeFiles/rebuild_cache.dir
