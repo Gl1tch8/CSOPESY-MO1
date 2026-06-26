@@ -22,6 +22,8 @@ std::string InitializeService::executeFlags(std::string input) {
 
     SystemState::getInstance().initializeCores(static_cast<int>(config.cpuCount));
 
+    SystemState::getInstance().setInitialized(true);
+
     std::ostringstream output;
     output << "System initialized with " << config.cpuCount << " CPU cores using "
            << config.schedulingAlgo << " scheduling.";

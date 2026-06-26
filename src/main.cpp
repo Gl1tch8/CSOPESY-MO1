@@ -56,7 +56,12 @@ int main()
         std::getline(std::cin, input);
         command = helper.parse(input);
 
-
+        if (!SystemState::getInstance().isInitialized()) {
+            if (command != "initialize" && command != "exit") {
+                std::cout << "Error: 'initialize' must be called before any other command is recognized." << std::endl;
+                continue; // Skip the rest of the loop and ask for input again
+            }
+        }
         if (command == "initialize") {
             initializeCommand->execute(input);
         }

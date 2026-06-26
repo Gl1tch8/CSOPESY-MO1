@@ -12,6 +12,11 @@
 class SystemState {
 public:
     static SystemState& getInstance();
+
+    // init before any other cmd is recognize
+    bool isInitialized() const { return initialized; }
+    void setInitialized(bool state) { initialized = state; }
+
     void initializeCores(int count);
 
     int getNumCores() const;
@@ -36,8 +41,9 @@ private:
     SystemState(const SystemState&) = delete;
     SystemState& operator=(const SystemState&) = delete;
 
+    bool initialized = false;
+    
     std::vector<Core> cores;
-    // std::vector<Process> processes;
     // std::vector no work bc Process has a mutex (unmovable)
     std::vector<std::shared_ptr<Process>> processes;
     mutable std::shared_mutex processMutex;
