@@ -4,11 +4,15 @@
 #include <string>
 #include <unordered_map>
 
+class SchedulerService; // forward decl: screen -s creates processes via the scheduler
 
 class ScreenService : public Service {
 public:
 
     ScreenService();
+
+    // wire the scheduler used to create processes for "screen -s <name>"
+    void setScheduler(SchedulerService* s) { scheduler = s; }
 
     // Reads the flags of the command and executes
     // the needed logic based on it
@@ -46,6 +50,8 @@ public:
         //stores the process name and the process details as a pointer
         std::unordered_map<std::string, Process*> screens;
         std::string activeScreen;
+        // scheduler used to create + enqueue processes for "screen -s"
+        SchedulerService* scheduler = nullptr;
         std::unordered_map<std::string, std::vector<std::string>> sessionLogs;
         
         // executes the block of instructions for a process, updating  symbol table and tick count

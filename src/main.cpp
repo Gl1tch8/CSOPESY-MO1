@@ -21,6 +21,7 @@ int main()
     ScreenCommand* screenCommand = new ScreenCommand(screenService);    ScreenMuxService* screenMuxService = new ScreenMuxService();
     SchedulerService* schedulerService = new SchedulerService();
     SchedulerCommand* schedulerCommand = new SchedulerCommand(schedulerService);
+    screenService->setScheduler(schedulerService); // screen -s creates processes via the scheduler
     ReportUtilService* reportUtilService = new ReportUtilService();
     ReportUtilCommand* reportUtilCommand = new ReportUtilCommand(reportUtilService);
     ClearService* clearService = new ClearService();
@@ -47,7 +48,8 @@ int main()
         if (!SystemState::getInstance().isInitialized()) {
             if (command == "initialize") {
                 initializeCommand->execute(input);
-                state.start();          // begin ticking after init
+                state.start();              // begin ticking after init
+                schedulerService->initScheduler(); // bring CPU cores online immediately
             }
             else if (command == "exit") {
                 exitCommand->execute(input);

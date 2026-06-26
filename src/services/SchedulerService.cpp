@@ -24,26 +24,38 @@ std::string SchedulerService::executeFlags(std::string input) {
     return "Error: unrecognized scheduler command.";
 }
 
-void SchedulerService::start() {
+void SchedulerService::initScheduler() {
     if (running) {
-        return;
+        return; // cores already online
     }
 
     ConfigService configService;
     configService.parseConfigFile();
-    
+
     config = configService.getConfig();
 
     SystemState::getInstance().initializeCores(config.cpuCount);
     cpuReadyQueues.resize(config.cpuCount);
-    
-    running = true;
-    generating = true;
 
+    running = true;
+
+    // bring the CPU cores online so processes can execute immediately,
+    // even before "scheduler-start" begins generating dummy processes.
     for (int i = 0; i < static_cast<int>(config.cpuCount); ++i) {
         cpuThreads.emplace_back(&SchedulerService::runCpuCore, this, i);
     }
+}
 
+void SchedulerService::start() {
+    if (!running) {
+        initScheduler(); // safety: ensure cores are up
+    }
+
+    if (generating) {
+        return; // generation already running
+    }
+
+    generating = true;
     generatorThread = std::thread(&SchedulerService::generateProcessor, this);
 }
 
@@ -65,9 +77,9 @@ void SchedulerService::stop() {
 
 void SchedulerService::run() {}
 
-void SchedulerService::generateProcessor() {
+std::vector<Instruction> SchedulerService::generateInstructions(const std::string& name) {
+    std::lock_guard<std::mutex> guard(genMutex); // rng shared with generator thread
 
-    std::mt19937 rng(std::random_device{}());
     std::uniform_int_distribution<int> insDist(config.minIns, config.maxIns);
     std::uniform_int_distribution<int> opDist(0, 4); // DECLARE, PRINT, ADD, SUBTRACT, SLEEP
     std::uniform_int_distribution<int> valDist(0, 100);
@@ -76,14 +88,14 @@ void SchedulerService::generateProcessor() {
     std::uniform_int_distribution<int> forChance(0, 4); // 1 in 5 chance of FOR
 
     std::function<std::vector<Instruction>(const std::string&, int, int)> makeBlock =
-        [&](const std::string& name, int count, int depth) -> std::vector<Instruction> {
+        [&](const std::string& n, int count, int depth) -> std::vector<Instruction> {
         std::vector<Instruction> block;
         for (int k = 0; k < count; ++k) {
             if (depth < 3 && forChance(rng) == 0) {
                 Instruction forInstr;
                 forInstr.opCode = OperationCode::FOR;
                 forInstr.repeats = repeatDist(rng);
-                forInstr.body = makeBlock(name, std::uniform_int_distribution<int>(2, 4)(rng), depth + 1);
+                forInstr.body = makeBlock(n, std::uniform_int_distribution<int>(2, 4)(rng), depth + 1);
                 block.push_back(forInstr);
             } else {
                 int op = opDist(rng);
@@ -93,7 +105,7 @@ void SchedulerService::generateProcessor() {
                     instr.operands = {"x", std::to_string(valDist(rng))};
                 } else if (op == 1) {
                     instr.opCode = OperationCode::PRINT;
-                    instr.operands = {"\"Hello world from " + name + "!\""};
+                    instr.operands = {"\"Hello world from " + n + "!\""};
                 } else if (op == 2) {
                     instr.opCode = OperationCode::ADD;
                     instr.operands = {"x", "x", std::to_string(valDist(rng))};
@@ -110,7 +122,67 @@ void SchedulerService::generateProcessor() {
         return block;
     };
 
+    int numInstructions = insDist(rng);
+    return makeBlock(name, numInstructions, 0);
+}
 
+void SchedulerService::enqueueProcess(ProcessInfo info) {
+    std::unique_lock lock(queueMutex);
+
+    if (config.schedulingAlgo == "rr") {
+        // distribute evenly across cores
+        info.coreId = nextCoreAssignment;
+        nextCoreAssignment = (nextCoreAssignment + 1) % static_cast<int>(config.cpuCount);
+    }
+    else if (config.schedulingAlgo == "fcfs") {
+        int shortestCore = 0;
+        size_t minSize = std::numeric_limits<size_t>::max();
+
+        // load balancer
+        for (int i = 0; i < static_cast<int>(cpuReadyQueues.size()); ++i) {
+            if (cpuReadyQueues[i].size() < minSize) {
+                minSize = cpuReadyQueues[i].size();
+                shortestCore = i;
+            }
+        }
+        info.coreId = shortestCore;
+    }
+
+    // push to chosen q
+    if (info.coreId >= 0 && info.coreId < static_cast<int>(cpuReadyQueues.size())) {
+        Process process(info);
+        cpuReadyQueues[info.coreId].push(process);
+        SystemState::getInstance().addProcess(process);
+    }
+}
+
+std::string SchedulerService::createProcess(const std::string& name) {
+    if (!running) {
+        return "Error: system not initialized.";
+    }
+    if (SystemState::getInstance().getProcessByName(name) != nullptr) {
+        return "Error: process " + name + " already exists.";
+    }
+
+    ProcessInfo info;
+    info.pid = static_cast<int>(processCounter++);
+    info.name = name;
+    info.arrivalTime = SystemState::getInstance().getSystemTime();
+    info.burstTime = 0;
+    info.startTime = 0;
+    info.endTime = 0;
+    info.currentLineIndex = 0;
+    info.state = ProcessState::NEW;
+    info.coreId = 0;
+
+    info.instructions = generateInstructions(name);
+    info.totalLines = static_cast<int>(info.instructions.size());
+
+    enqueueProcess(info);
+    return "";
+}
+
+void SchedulerService::generateProcessor() {
     while (generating) {
         uint64_t currentTick = SystemState::getInstance().getSystemTime();
         if (currentTick % config.batchProcessFreq == 0) {
@@ -130,43 +202,11 @@ void SchedulerService::generateProcessor() {
             info.currentLineIndex = 0;
             info.state = ProcessState::NEW;
 
-            int numInstructions = insDist(rng);
-            info.instructions = makeBlock(name, numInstructions, 0);
+            info.instructions = generateInstructions(name);
             info.totalLines = static_cast<int>(info.instructions.size());
 
             info.coreId = 0;
-
-            {
-                std::unique_lock lock(queueMutex);
-                
-                if (config.schedulingAlgo == "rr") {
-                    // distribute evenly across cores
-                    info.coreId = nextCoreAssignment;
-                    nextCoreAssignment = (nextCoreAssignment + 1) % static_cast<int>(config.cpuCount);
-                }
-                else if (config.schedulingAlgo == "fcfs") {
-                    int shortestCore = 0;
-                    size_t minSize = std::numeric_limits<size_t>::max();
-                    
-                    // load balancer
-                    for (int i = 0; i < static_cast<int>(cpuReadyQueues.size()); ++i) {
-                        if (cpuReadyQueues[i].size() < minSize) {
-                            minSize = cpuReadyQueues[i].size();
-                            shortestCore = i;
-                        }
-                    }
-                    info.coreId = shortestCore;
-                }
-                info.arrivalTime = currentTick;
-
-                // push to chosen q
-                if (info.coreId >= 0 && info.coreId < static_cast<int>(cpuReadyQueues.size())) {
-                    Process process(info);
-                    cpuReadyQueues[info.coreId].push(process);
-                    SystemState::getInstance().addProcess(process);
-                }
-            }
-
+            enqueueProcess(info);
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1));

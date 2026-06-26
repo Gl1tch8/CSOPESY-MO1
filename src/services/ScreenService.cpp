@@ -1,4 +1,5 @@
 #include "../../include/services/ScreenService.hpp"
+#include "../../include/services/SchedulerService.hpp"
 #include "../../include/misc/SystemState.hpp"
 
 #include <algorithm>
@@ -30,8 +31,23 @@ std::string ScreenService::executeFlags(std::string input) {
         }
         std::string name = tokens[2];
 
-        if(this->screens.find(name) != screens.end())
-            return "Error: screen with process name:"+name+" already exists";
+        // reject duplicates: an existing process (running or finished) or an open session
+        if (SystemState::getInstance().getProcessByName(name) != nullptr ||
+            this->screens.find(name) != screens.end()) {
+            return "Error: process " + name + " already exists.";
+        }
+
+        // create the new process and enqueue it for execution
+        if (scheduler) {
+            std::string err = scheduler->createProcess(name);
+            if (!err.empty()) {
+                return err;
+            }
+        } else {
+            return "Error: scheduler unavailable.";
+        }
+
+        // move into the newly created process's screen
         return openSessionWindow(name);
     } 
         else if (flag == "-r") {
