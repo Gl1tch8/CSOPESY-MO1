@@ -1,4 +1,6 @@
-#include "SymbolTable.hpp";
+#include "SymbolTable.hpp"
+
+SymbolTable::SymbolTable() {}
 
 uint16_t SymbolTable::getSymbol(std::string name) {
     return this->variableTable[name];

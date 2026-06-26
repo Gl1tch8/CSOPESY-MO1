@@ -1,5 +1,5 @@
 #include "../../src/interfaces/Command.hpp"
-#include "../../include/services/ScreenService.hpp"
+#include "../../include/services/ReportUtilService.hpp"
 
 // libraries for sleep
 #include <chrono>
@@ -8,7 +8,7 @@
 class ReportUtilCommand : public Command {
 public:
     // Accept the ReportUtilService pointer from main.cpp
-    ReportUtilCommand(ScreenService* service);
+    ReportUtilCommand(ReportUtilService* service);
 
     void print(std::string log);
 

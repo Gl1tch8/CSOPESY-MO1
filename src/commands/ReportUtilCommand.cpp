@@ -1,6 +1,6 @@
 #include "../../include/commands/ReportUtilCommand.hpp" 
 
-ReportUtilCommand::ReportUtilCommand(ScreenService* service) : Command(*service) {}
+ReportUtilCommand::ReportUtilCommand(ReportUtilService* service) : Command(*service) {}
 
 void ReportUtilCommand::print(std::string log) {
     std::cout << log << std::endl;

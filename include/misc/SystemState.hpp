@@ -12,10 +12,16 @@ public:
     int getNumCores() const;
     const int getActiveCores() const;
 
+    // CPU utilization as a percentage (used cores / total cores * 100)
+    double getCpuUtilization() const;
+    // number of cores currently running a process
+    int getCoresUsed() const;
+    // number of idle cores
+    int getCoresAvailable() const;
 
     void addProcess(const Process& process);
-    const std::vector<Process>& getRunningProcesses() const;
-    const std::vector<Process>& getFinishedProcesses() const;
+    std::vector<Process> getRunningProcesses() const;
+    std::vector<Process> getFinishedProcesses() const;
 
 
 private:

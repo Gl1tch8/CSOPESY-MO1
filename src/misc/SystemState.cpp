@@ -2,6 +2,8 @@
 #include "Core.hpp"
 #include <algorithm>
 #include <vector>
+SystemState::SystemState() {}
+
 // singleton instance of system state
 SystemState& SystemState::getInstance() {
     static SystemState instance;
@@ -12,8 +14,7 @@ void SystemState::addProcess(const Process& process) {
     this->processes.push_back(process);
 }
 
-// read only
-const std::vector<Process>& SystemState::getRunningProcesses() const {
+std::vector<Process> SystemState::getRunningProcesses() const {
     std::vector<Process> list;
     for(int i=0; i<this->processes.size(); i++) {
         if(processes[i].getState() == ProcessState::RUNNING )
@@ -21,14 +22,31 @@ const std::vector<Process>& SystemState::getRunningProcesses() const {
     }
     return list;
 }
-// read only
-const std::vector<Process>& SystemState::getFinishedProcesses() const {
+
+std::vector<Process> SystemState::getFinishedProcesses() const {
     std::vector<Process> list;
     for(int i=0; i<this->processes.size(); i++) {
         if(processes[i].getState() == ProcessState::FINISHED)
             list.push_back(processes[i]);
     }
     return list;
+}
+
+// number of cores currently running a process
+int SystemState::getCoresUsed() const {
+    return this->getActiveCores();
+}
+
+// number of idle cores
+int SystemState::getCoresAvailable() const {
+    return this->getNumCores() - this->getActiveCores();
+}
+
+// CPU utilization as a percentage (used cores / total cores * 100)
+double SystemState::getCpuUtilization() const {
+    int total = this->getNumCores();
+    if (total == 0) return 0.0;
+    return (static_cast<double>(this->getActiveCores()) / total) * 100.0;
 }
 
 // counts available cores

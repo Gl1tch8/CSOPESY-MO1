@@ -1,7 +1,8 @@
 #pragma once
 #include<cstdint>
-
 typedef uint64_t CPUTick;
+
+class Process;
 
 class Core {
 public:
@@ -9,6 +10,7 @@ public:
     Core(int id):id(id) {};
 
     int getId() const;
+    void setId(int id);
     bool isActive() const;
     void setActive(bool active);
     void setActiveProcess(Process *p);

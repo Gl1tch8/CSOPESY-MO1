@@ -4,6 +4,7 @@
 #include <vector>
 #include <chrono>
 #include "SymbolTable.hpp"
+#include "Core.hpp"
 enum class ProcessState {
     NEW,
     READY,
