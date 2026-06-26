@@ -13,11 +13,9 @@ public:
     void setId(int id);
     bool isActive() const;
     void setActive(bool active);
-    void setId(int id);
     void setActiveProcess(Process *p);
 
     
-    void run();
 private:
     int id = 0;
     bool active = false;
