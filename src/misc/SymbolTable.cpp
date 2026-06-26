@@ -8,7 +8,7 @@ uint16_t SymbolTable::getSymbol(std::string name) {
 }
 
 void SymbolTable::setSymbol(std::string name, uint16_t value) {
-    this->variableTable.emplace(name,value);
+    this->variableTable[name] = value;   // insert or overwrite (emplace never updates an existing key)
 }
 
 
@@ -73,6 +73,12 @@ void InstructionParser::executeBlock(const std::vector<Instruction>& instruction
 
 
 void InstructionParser::print(std::string message) {
+    // Bare variable name (no surrounding quotes): print its value from the SymbolTable
+    if (!message.empty() && message.front() != '"') {
+        outputLog.push_back(std::to_string(symbolTable.getSymbol(message)));
+        return;
+    }
+
     std::string out = message;
 
     // Strip surrounding quotes if present

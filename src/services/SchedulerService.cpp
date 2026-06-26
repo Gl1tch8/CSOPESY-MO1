@@ -7,6 +7,7 @@
 #include <mutex>
 #include <iomanip>
 #include <sstream>
+#include <algorithm>
 
 SchedulerService::SchedulerService() : Service() {}
 
@@ -87,6 +88,23 @@ std::vector<Instruction> SchedulerService::generateInstructions(const std::strin
     std::uniform_int_distribution<uint8_t> repeatDist(2, 5);
     std::uniform_int_distribution<int> forChance(0, 4); // 1 in 5 chance of FOR
 
+    const std::vector<std::string> varPool = {"x", "y", "z"};
+    std::uniform_int_distribution<size_t> varDist(0, varPool.size() - 1);
+    std::vector<std::string> declared;            // vars introduced so far (one symbol table per process)
+    std::uniform_int_distribution<int> printChoice(0, 1);
+    auto recordVar = [&](const std::string& v) {
+        if (std::find(declared.begin(), declared.end(), v) == declared.end()) declared.push_back(v);
+    };
+    // ADD/SUBTRACT operands 2 and 3 may each be a variable or a literal value
+    auto randOperand = [&]() -> std::string {
+        if (printChoice(rng) == 0) {
+            std::string var = varPool[varDist(rng)];
+            recordVar(var); // variables auto-declare to 0 if not yet set
+            return var;
+        }
+        return std::to_string(valDist(rng));
+    };
+
     std::function<std::vector<Instruction>(const std::string&, int, int)> makeBlock =
         [&](const std::string& n, int count, int depth) -> std::vector<Instruction> {
         std::vector<Instruction> block;
@@ -101,17 +119,28 @@ std::vector<Instruction> SchedulerService::generateInstructions(const std::strin
                 int op = opDist(rng);
                 Instruction instr;
                 if (op == 0) {
+                    std::string var = varPool[varDist(rng)];
                     instr.opCode = OperationCode::DECLARE;
-                    instr.operands = {"x", std::to_string(valDist(rng))};
+                    instr.operands = {var, std::to_string(valDist(rng))};
+                    recordVar(var);
                 } else if (op == 1) {
                     instr.opCode = OperationCode::PRINT;
-                    instr.operands = {"\"Hello world from " + n + "!\""};
+                    if (!declared.empty() && printChoice(rng) == 0) {
+                        std::uniform_int_distribution<size_t> pick(0, declared.size() - 1);
+                        instr.operands = {"\"Value from: \" +" + declared[pick(rng)]};
+                    } else {
+                        instr.operands = {"\"Hello world from " + n + "!\""};
+                    }
                 } else if (op == 2) {
+                    std::string dest = varPool[varDist(rng)];
                     instr.opCode = OperationCode::ADD;
-                    instr.operands = {"x", "x", std::to_string(valDist(rng))};
+                    instr.operands = {dest, randOperand(), randOperand()};
+                    recordVar(dest);
                 } else if (op == 3) {
+                    std::string dest = varPool[varDist(rng)];
                     instr.opCode = OperationCode::SUBTRACT;
-                    instr.operands = {"x", "x", std::to_string(valDist(rng))};
+                    instr.operands = {dest, randOperand(), randOperand()};
+                    recordVar(dest);
                 } else {
                     instr.opCode = OperationCode::SLEEP;
                     instr.operands = {std::to_string(sleepDist(rng))};
