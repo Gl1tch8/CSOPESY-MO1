@@ -58,16 +58,17 @@ class ProcessScheduler {
             while(this->readyQueue.size() > 0) {
                 std::cout <<"Time: " << time << std::endl;
 
-                if(algorithm == "SJF") {
-                    if(preemptive) {
-                        sortSJF(time);
-                    } else {
-                        if(!sortedOnce) {
-                            sortSJF(time);
-                            sortedOnce = true;
-                        }
-                    }
-                } else if(algorithm == "Round Robin") {
+                // if(algorithm == "SJF") {
+                //     if(preemptive) {
+                //         sortSJF(time);
+                //     } else {
+                //         if(!sortedOnce) {
+                //             sortSJF(time);
+                //             sortedOnce = true;
+                //         }
+                //     }
+                // } else 
+                if(algorithm == "Round Robin") {
                     if(!sortedOnce) {
                         sortFCFS();
                         sortedOnce = true;

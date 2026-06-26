@@ -6,6 +6,7 @@
 #include <vector>
 #include <mutex>
 #include <atomic>
+#include <thread>
 
 #include "Process.hpp"
 #include "Core.hpp"
@@ -29,6 +30,9 @@ public:
     int getCoresAvailable() const;
     double getCpuUtilization() const;
 
+    void start();   // launch mainLoop on a background thread
+    void stop();    // signal the loop to stop, then join
+
     void setCoreActive(int coreId, bool active);
     void setCoreProcess(int coreId, Process* p);
 
@@ -42,15 +46,19 @@ public:
 
 private:
     SystemState();
-    ~SystemState() = default;
+    ~SystemState();
+
+    void mainLoop();
 
     //prevent copying
     SystemState(const SystemState&) = delete;
     SystemState& operator=(const SystemState&) = delete;
 
     bool initialized = false;
-    
+    std::atomic<bool> isRunning = true;
     std::atomic<uint64_t> globalTick{0};
+
+    std::thread loopThread;
 
     std::vector<Core> cores;
     // std::vector no work bc Process has a mutex (unmovable)

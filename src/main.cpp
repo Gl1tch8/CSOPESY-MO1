@@ -5,48 +5,30 @@
 
 #include "include.hpp"
 
+
+
 int main()
 {
-
-
-    // create variable for the header text
-    std::string asciiArt = R"(
- _______  _______  _______  _______  _______  _______          
-(  ____ \(  ____ \(  ___  )(  ____ )(  ____ \(  ____ \|\     /|
-| (    \/| (    \/| (   ) || (    )|| (    \/| (    \/( \   / )
-| |      | (_____ | |   | || (____)|| (__    | (_____  \ (_) / 
-| |      (_____  )| |   | ||  _____)|  __)   (_____  )  \   /  
-| |            ) || |   | || (      | (            ) |   ) (   
-| (____/\/\____) || (___) || )      | (____/\/\____) |   | |   
-(_______/\_______)(_______)|/       (_______/\_______)   \_/   
-                                                              )";
-
-
-    std::string headerText = asciiArt + "\nHello, Welcome to CSOPESY commandline!\nType 'exit' to quit, 'clear' to clear the screen";
-    headerText += "\n\n** IMPORTANT: Type 'initialize' to load config and start system **\n\n";
-    
-    std::cout << headerText << std::endl;
-    
     std::string input;
     std::string command;
-    
+   
     Helper helper;
     
-        InitializeService* initializeService = new InitializeService(); 
-                InitializeCommand* initializeCommand = new InitializeCommand(initializeService);
-        ScreenService* screenService = new ScreenService();
-                ScreenCommand* screenCommand = new ScreenCommand(screenService);
-        ScreenMuxService* screenMuxService = new ScreenMuxService();
-        SchedulerService* schedulerService = new SchedulerService();
-                SchedulerCommand* schedulerCommand = new SchedulerCommand(schedulerService);
-        ReportUtilService* reportUtilService = new ReportUtilService();
-                ReportUtilCommand* reportUtilCommand = new ReportUtilCommand(reportUtilService);
-        ClearService* clearService = new ClearService();
-                ClearCommand* clearCommand = new ClearCommand(clearService);
-        ExitService* exitService = new ExitService();
-                ExitCommand* exitCommand = new ExitCommand(exitService);
+    InitializeService* initializeService = new InitializeService(); 
+    InitializeCommand* initializeCommand = new InitializeCommand(initializeService);
+    ScreenService* screenService = new ScreenService();
+    ScreenCommand* screenCommand = new ScreenCommand(screenService);    ScreenMuxService* screenMuxService = new ScreenMuxService();
+    SchedulerService* schedulerService = new SchedulerService();
+    SchedulerCommand* schedulerCommand = new SchedulerCommand(schedulerService);
+    ReportUtilService* reportUtilService = new ReportUtilService();
+    ReportUtilCommand* reportUtilCommand = new ReportUtilCommand(reportUtilService);
+    ClearService* clearService = new ClearService();
+    ClearCommand* clearCommand = new ClearCommand(clearService);
+    ExitService* exitService = new ExitService();
+    ExitCommand* exitCommand = new ExitCommand(exitService);
 
 
+    SystemState &state = SystemState::getInstance();
 
 
     // loop starting here:
@@ -57,13 +39,21 @@ int main()
         command = helper.parse(input);
 
         if (!SystemState::getInstance().isInitialized()) {
-            if (command != "initialize" && command != "exit") {
+            if (command == "initialize") {
+                initializeCommand->execute(input);
+                state.start();          // begin ticking after init
+            }
+            else if (command == "exit") {
+                exitCommand->execute(input);
+                isRunning = false;
+            }
+            else {
                 std::cout << "Error: 'initialize' must be called before any other command is recognized." << std::endl;
                 continue; // Skip the rest of the loop and ask for input again
             }
         }
-        if (command == "initialize") {
-            initializeCommand->execute(input);
+        else if (command == "initialize") {
+            std::cout << "System is already initialized." << std::endl;
         }
         else if (command == "screen") {
             screenCommand->execute(input);
@@ -79,13 +69,9 @@ int main()
         }
         else if (command == "report-util") {
             reportUtilCommand->execute(input);
-        }
-        else if (command == "clear") {
-            clearCommand->execute(input);
-            std::cout << headerText << std::endl;
-        }
-        else if (command == "exit") {
+        } else if (command == "exit") {
 
+            state.stop();               // signal + join the tick thread before exiting
             exitCommand->execute(input);
 			isRunning = false;
         }

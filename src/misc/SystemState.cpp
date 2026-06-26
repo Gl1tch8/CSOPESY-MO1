@@ -1,7 +1,14 @@
 #include "../../include/misc/SystemState.hpp"
 #include "Core.hpp"
 
+#include <chrono>
+
 SystemState::SystemState() {}
+
+// ensure the background loop is stopped before destruction
+SystemState::~SystemState() {
+    stop();
+}
 
 // singleton instance of system state
 SystemState& SystemState::getInstance() {
@@ -103,4 +110,26 @@ std::shared_ptr<Process> SystemState::getProcessByName(const std::string& name) 
         if (p && p->getName() == name) return p;
     }
     return nullptr;
+}
+
+void SystemState::start() {
+    // guard against double-start
+    if (loopThread.joinable()) return;
+
+    isRunning = true;
+    loopThread = std::thread(&SystemState::mainLoop, this);
+}
+
+void SystemState::stop() {
+    isRunning = false;                 // signal the loop to exit
+    if (loopThread.joinable())
+        loopThread.join();             // wait for it to actually finish
+}
+
+void SystemState::mainLoop() {
+    while (this->isRunning) {
+        this->incrementSystemTime();
+        // give each tick some duration instead of spinning a CPU core flat-out
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    }
 }
