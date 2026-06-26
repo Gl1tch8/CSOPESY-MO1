@@ -26,15 +26,16 @@ int main()
     ClearCommand* clearCommand = new ClearCommand(clearService);
     ExitService* exitService = new ExitService();
     ExitCommand* exitCommand = new ExitCommand(exitService);
-
+    MainMenuTUI* mainMenu = new MainMenuTUI();
 
     SystemState &state = SystemState::getInstance();
 
 
     // loop starting here:
     bool isRunning = true;
+    mainMenu->printMainMenu();
     while (isRunning) {
-        std::cout << "Enter a command: ";
+        std::cout << "root:\\>";
         std::getline(std::cin, input);
         command = helper.parse(input);
 
