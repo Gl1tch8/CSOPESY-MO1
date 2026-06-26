@@ -1,5 +1,5 @@
 #include "../../include/commands/ClearCommand.hpp" 
-
+#include <tui/MainMenu.hpp>
 ClearCommand::ClearCommand(ClearService* service) : Command(*service) {}
 
 void ClearCommand::print(std::string log) {
@@ -11,5 +11,5 @@ void ClearCommand::execute(std::string input) {
     this->print(log);
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    system("cls"); //clear the screen
+    MainMenuTUI::clear();
 }

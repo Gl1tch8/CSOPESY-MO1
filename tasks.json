@@ -1,0 +1,91 @@
+{
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++.exe build active file",
+            "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "-std=c++20",
+                "-I",
+                "${workspaceFolder}\\include",
+                "-I",
+                "${workspaceFolder}\\src",
+                "${workspaceFolder}\\src\\main.cpp",
+                "${workspaceFolder}\\src\\commands\\ClearCommand.cpp",
+                "${workspaceFolder}\\src\\commands\\ExitCommand.cpp",
+                "${workspaceFolder}\\src\\commands\\InitializeCommand.cpp",
+                "${workspaceFolder}\\src\\commands\\ReportUtilCommand.cpp",
+                "${workspaceFolder}\\src\\commands\\SchedulerCommand.cpp",
+                "${workspaceFolder}\\src\\commands\\ScreenCommand.cpp",
+                "${workspaceFolder}\\src\\misc\\Core.cpp",
+                "${workspaceFolder}\\src\\misc\\Helper.cpp",
+                "${workspaceFolder}\\src\\misc\\Process.cpp",
+                "${workspaceFolder}\\src\\misc\\SymbolTable.cpp",
+                "${workspaceFolder}\\src\\misc\\SystemState.cpp",
+                "${workspaceFolder}\\src\\services\\ClearService.cpp",
+                "${workspaceFolder}\\src\\services\\ExitService.cpp",
+                "${workspaceFolder}\\src\\services\\InitializeService.cpp",
+                "${workspaceFolder}\\src\\services\\ReportUtilService.cpp",
+                "${workspaceFolder}\\src\\services\\SchedulerService.cpp",
+                "${workspaceFolder}\\src\\services\\ScreenService.cpp",
+                "-o",
+                "${workspaceFolder}\\src\\main.exe"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Build the non-GUI console app into src\\main.exe."
+        },
+        {
+            "type": "cppbuild",
+            "label": "build-app",
+            "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "-std=c++20",
+                "-I",
+                "${workspaceFolder}\\include",
+                "-I",
+                "${workspaceFolder}\\src",
+                "${workspaceFolder}\\src\\main.cpp",
+                "${workspaceFolder}\\src\\commands\\ClearCommand.cpp",
+                "${workspaceFolder}\\src\\commands\\ExitCommand.cpp",
+                "${workspaceFolder}\\src\\commands\\InitializeCommand.cpp",
+                "${workspaceFolder}\\src\\commands\\ReportUtilCommand.cpp",
+                "${workspaceFolder}\\src\\commands\\SchedulerCommand.cpp",
+                "${workspaceFolder}\\src\\commands\\ScreenCommand.cpp",
+                "${workspaceFolder}\\src\\misc\\Core.cpp",
+                "${workspaceFolder}\\src\\misc\\Helper.cpp",
+                "${workspaceFolder}\\src\\misc\\Process.cpp",
+                "${workspaceFolder}\\src\\misc\\SymbolTable.cpp",
+                "${workspaceFolder}\\src\\misc\\SystemState.cpp",
+                "${workspaceFolder}\\src\\services\\ClearService.cpp",
+                "${workspaceFolder}\\src\\services\\ExitService.cpp",
+                "${workspaceFolder}\\src\\services\\InitializeService.cpp",
+                "${workspaceFolder}\\src\\services\\ReportUtilService.cpp",
+                "${workspaceFolder}\\src\\services\\SchedulerService.cpp",
+                "${workspaceFolder}\\src\\services\\ScreenService.cpp",
+                "-o",
+                "${workspaceFolder}\\src\\main.exe"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Build the non-GUI console app into src\\main.exe (used by the Run/Debug launch config)."
+        }
+    ],
+    "version": "2.0.0"
+}

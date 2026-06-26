@@ -3,7 +3,8 @@
 #include <fstream>
 #include <sstream>
 
-ReportUtilService::ReportUtilService() : Service() {}
+// removed : Service()
+ReportUtilService::ReportUtilService() {}
 
 std::string ReportUtilService::executeFlags(std::string input) {
     SystemState& state = SystemState::getInstance();
@@ -16,24 +17,26 @@ std::string ReportUtilService::executeFlags(std::string input) {
 
     ss << "Running processes:\n";
     for (const auto& proc : state.getRunningProcesses()) {
-        ss << proc.getName() << "  (" << proc.getStartTimeStr() << ")  Core: " << proc.getCoreId()
-           << "  " << proc.getCurrentLine() << " / " << proc.getTotalLines() << "\n";
+        ss << proc->getName() << "  (" << proc->getStartTimeStr() << ")  Core: " << proc->getCoreId()
+           << "  " << proc->getCurrentLine() << " / " << proc->getTotalLines() << "\n";
     }
     ss << "\n";
 
     ss << "Finished processes:\n";
     for (const auto& proc : state.getFinishedProcesses()) {
-        ss << proc.getName() << "  (" << proc.getStartTimeStr() << ")  Finished  "
-           << proc.getCurrentLine() << " / " << proc.getTotalLines() << "\n";
+        ss << proc->getName() << "  (" << proc->getStartTimeStr() << ")  Finished  "
+           << proc->getCurrentLine() << " / " << proc->getTotalLines() << "\n";
     }
 
     std::string report = ss.str();
 
+    // add ", std::ios::app" to overwrite 
     std::ofstream outFile("csopesy-log.txt");
     if (!outFile.is_open()) {
         return "Error: Could not open csopesy-log.txt for writing.";
     }
-    outFile << report;
+
+    outFile << "\n\n" << report;
     outFile.close();
 
     return "Report generated at csopesy-log.txt!";

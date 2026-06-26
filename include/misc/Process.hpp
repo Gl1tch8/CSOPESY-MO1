@@ -3,6 +3,13 @@
 #include <string>
 #include <vector>
 #include <chrono>
+#include <algorithm>
+#include <sstream>
+#include <mutex>
+#include <chrono> 
+#include <ctime>
+
+#include "Core.hpp"
 #include "SymbolTable.hpp"
 #include "Core.hpp"
 enum class ProcessState {
@@ -53,7 +60,11 @@ struct ProcessInfo {
 
 class Process {
 public:
-    Process(ProcessInfo info) : info(info) {}
+    Process(ProcessInfo info);
+
+    // copy constructor
+    Process(const Process& other)
+    : info(other.info), startTimeStr(other.startTimeStr), outputLog(other.outputLog) {}
 
     // Compatibility constructor
     Process(std::string name, int pid, std::string startTime, int coreId, int currentLine, int totalLines, bool isFinished);
@@ -103,9 +114,20 @@ public:
     void setIsFinished(bool finished);
     std::string getStartTimeStr() const;
 
+    void executeInstructions(uint64_t& tick, std::atomic<bool>& running);
+    std::string getOutput() const;
+    void appendOutput(const std::string& line);
+
+    
 private:
     ProcessInfo info;
     std::string startTimeStr;
+    void executeBlock(const std::vector<Instruction>& instructions, SymbolTable& sym, uint64_t& tick, std::atomic<bool>& running);
+    
+    std::vector<std::string> outputLog;
+
+    // mutable bc its used on getOutput, a const
+    mutable std::mutex outputMutex;
 };
 
 

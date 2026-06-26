@@ -1,4 +1,5 @@
 # CSOPESY-MO1
+
 CSOPESY Major Output: Process Scheduler and CLI
 
 Members:
@@ -7,40 +8,29 @@ Chua, Renzo Sheldon Trevor K.
 Liong, John Lawrence O.
 
 Instructions: -
-Entry class file: - 
-*Add a README.txt with your name and instructions on running your program. Also, indicate the entry class file where the main function is located. An alternative can be a GitHub link.*
+Entry class file: -
+_Add a README.txt with your name and instructions on running your program. Also, indicate the entry class file where the main function is located. An alternative can be a GitHub link._
 
 ---
-/class activities - put the class activities related to the MO1 here
-format: <Week#><Surname> <Topic>
+
+1. Delete csopesy-log.txt before starting
+
+- csoesy-log.txt doesnt overwrite but appends. can change in reportUtilService.cpp.
+
+2. Ctrl shift b to build, then press run
 
 ## TODO:
-- for each cpp file, make a header file and put them in /include
-    - then, replace the .cpp to .hpp for EACH file (For example, check ClearCommand.cpp)
+
+[x] initialize: nothing should work until initialized
+[x] screen -r should show history
+[x] process should show datetime spawned
+[x] screen -ls: cpu core usage
+[x] screen -s, process-smi
+[x] update starttime and endtime of process (not sure if works)
+[x] screen -s error handling (if screen alr exists for process)
 
 ### Demo notes:
+
 - video quality must be 480p - 720p
 - max size: 1GB
 - show you pressing Run/Debug from IDE
-
-
-
-
---
-random code notes:
-int main()
-{
-
-    ConsoleManager consoleManager;
-    consoleManager.setCursorPosition(0, 1);
-}
-
-
-
-void ConsoleManager::setCursorPosition (int posX, int posY) const
-{
-    COORD coord;
-    coord.X = posX;
-    coord.Y = posY;
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-}

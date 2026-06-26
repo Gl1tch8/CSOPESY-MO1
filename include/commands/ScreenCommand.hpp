@@ -1,3 +1,4 @@
+#pragma once
 #include "../../src/interfaces/Command.hpp"
 #include "../../include/services/ScreenService.hpp"
 #include <vector>
@@ -15,5 +16,7 @@ public:
 
     void execute(std::string input);
 
- 
+private:
+    ScreenService* screenService;
+    ScreenMuxService* screenMuxService;
 };

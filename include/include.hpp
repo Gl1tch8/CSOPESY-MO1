@@ -7,6 +7,9 @@
 #include "commands/SchedulerCommand.hpp"
 #include "commands/ScreenCommand.hpp"
 
+#include "services/ReportUtilService.hpp"
+
 
 #include "misc/Helper.hpp"
 #include "misc/SystemState.hpp"
+#include "tui/MainMenu.hpp"

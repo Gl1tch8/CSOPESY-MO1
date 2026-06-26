@@ -1,5 +1,7 @@
+#pragma once
 #include "../../src/interfaces/Command.hpp"
 #include "../../include/services/ClearService.hpp"
+#include "../../include/tui/MainMenu.hpp"
 
 // libraries for sleep
 #include <chrono>

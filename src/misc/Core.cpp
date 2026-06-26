@@ -1,5 +1,5 @@
 #include "../../include/misc/Core.hpp"
-#include "../../include/misc/Process.hpp"
+#include "Process.hpp"
 
 int Core::getId() const { return id; }
 bool Core::isActive() const { return active; }
