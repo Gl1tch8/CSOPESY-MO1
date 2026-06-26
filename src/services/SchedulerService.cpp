@@ -31,11 +31,12 @@ void SchedulerService::start() {
 
     ConfigService configService;
     configService.parseConfigFile();
-    const Config& config = configService.getConfig();
+    
+    config = configService.getConfig();
 
     SystemState::getInstance().initializeCores(config.cpuCount);
-
     cpuReadyQueues.resize(config.cpuCount);
+    
     running = true;
     generating = true;
 
@@ -65,9 +66,6 @@ void SchedulerService::stop() {
 void SchedulerService::run() {}
 
 void SchedulerService::generateProcessor() {
-    ConfigService configService;
-    configService.parseConfigFile();
-    const Config& config = configService.getConfig();
 
     std::mt19937 rng(std::random_device{}());
     std::uniform_int_distribution<int> insDist(config.minIns, config.maxIns);
@@ -139,16 +137,36 @@ void SchedulerService::generateProcessor() {
             info.coreId = nextCoreAssignment;
             nextCoreAssignment = (nextCoreAssignment + 1) % static_cast<int>(config.cpuCount);
 
-            Process process(info);
-
             {
                 std::unique_lock lock(queueMutex);
+                
+                if (config.schedulingAlgo == "rr") {
+                    // distribute evenly across cores
+                    info.coreId = nextCoreAssignment;
+                    nextCoreAssignment = (nextCoreAssignment + 1) % static_cast<int>(config.cpuCount);
+                }
+                else if (config.schedulingAlgo == "fcfs") {
+                    int shortestCore = 0;
+                    size_t minSize = std::numeric_limits<size_t>::max();
+                    
+                    // load balancer
+                    for (int i = 0; i < static_cast<int>(cpuReadyQueues.size()); ++i) {
+                        if (cpuReadyQueues[i].size() < minSize) {
+                            minSize = cpuReadyQueues[i].size();
+                            shortestCore = i;
+                        }
+                    }
+                    info.coreId = shortestCore;
+                }
+
+                // push to chosen q
                 if (info.coreId >= 0 && info.coreId < static_cast<int>(cpuReadyQueues.size())) {
+                    Process process(info);
                     cpuReadyQueues[info.coreId].push(process);
+                    SystemState::getInstance().addProcess(process);
                 }
             }
 
-            SystemState::getInstance().addProcess(process);
         }
 
         ++tick;
@@ -181,18 +199,39 @@ void SchedulerService::runCpuCore(int coreId) {
                 uint64_t tick = 0;
                 InstructionParser parser(process->getSymbolTable(), running, process->getName());
                 
-                // exe and update running process 
                 const auto& instructions = process->getInstructions();
-                for (int i = 0; i < static_cast<int>(instructions.size()) && running; ++i) {
+
+                // time quantum for rr
+                int quantum = (config.schedulingAlgo == "rr") ? config.quantumCycles : static_cast<int>(instructions.size());
+                int linesExecuted = 0;
+                int startIndex = process->getCurrentLineIndex();
+                
+                for (int i = startIndex; i < static_cast<int>(instructions.size()) && running; ++i) {
                     parser.executeBlock({instructions[i]}, tick);
                     process->setCurrentLineIndex(i + 1);
+                    linesExecuted++;
+
+                    if (config.delayPerSec > 0) {
+                        std::this_thread::sleep_for(std::chrono::milliseconds(config.delayPerSec));
+                    }
+
+                    if (linesExecuted >= quantum) {
+                        break; // time-quantum limit
+                    }
                 }
 
                 for (const auto& line : parser.getOutput()) {
                     process->appendOutput(line);
                 }
 
-                process->setState(ProcessState::FINISHED);
+                if (process->getCurrentLineIndex() < static_cast<int>(instructions.size())) { // is process done?
+                    // put back in queue
+                    process->setState(ProcessState::READY);
+                    std::unique_lock lock(queueMutex);
+                    cpuReadyQueues[coreId].push(*process); 
+                } else {
+                    process->setState(ProcessState::FINISHED);
+                }
             }
         } else {
             std::this_thread::sleep_for(std::chrono::milliseconds(1));
