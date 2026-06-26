@@ -28,6 +28,7 @@ _Add a README.txt with your name and instructions on running your program. Also,
 [x] screen -s, process-smi
 [x] update starttime and endtime of process (not sure if works)
 [x] screen -s error handling (if screen alr exists for process)
+[ ] PRINT should show symbol table var
 
 ### Demo notes:
 

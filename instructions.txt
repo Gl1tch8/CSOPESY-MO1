@@ -1,0 +1,56 @@
+// numInstructions: 1000
+FOR([ADD (x, x, 1), PRINT("Value from: " +x), ADD (y, y, 1), PRINT("Value from: " +y), ADD (z, z, 1), PRINT("Value from: " +z)], 100)
+
+
+uint32_t numInstructions = 0;
+    std::string filepath = "instructions.txt";
+    {
+        std::lock_guard<std::mutex> lock(genMutex);
+        std::uniform_int_distribution<uint32_t> insDist(config.minIns, config.maxIns);
+        numInstructions = insDist(rng);
+
+        std::ifstream testFile(filepath);
+        if (!testFile.is_open()) {
+            filepath = "../instructions.txt";
+            testFile.open(filepath);
+        }
+        if (!testFile.is_open()) {
+            filepath = "../../instructions.txt";
+            testFile.open(filepath);
+        }
+
+        if (testFile.is_open()) {
+            std::vector<std::string> lines;
+            std::string line;
+            while (std::getline(testFile, line)) {
+                std::string trimmed = line;
+                trimmed.erase(0, trimmed.find_first_not_of(" \t\r\n"));
+                trimmed.erase(trimmed.find_last_not_of(" \t\r\n") + 1);
+                if (trimmed.empty()) continue;
+                if (trimmed.rfind("//", 0) == 0) continue;
+                lines.push_back(line);
+            }
+            testFile.close();
+
+            std::ofstream outFile(filepath, std::ios::trunc);
+            if (outFile.is_open()) {
+                outFile << "// numInstructions: " << numInstructions << "\n";
+                for (const auto& l : lines) {
+                    outFile << l << "\n";
+                }
+                outFile.close();
+            }
+        }
+    }
+    auto rawInsts = customInstructions(name, filepath, numInstructions);
+    auto flatInsts = flattenInstructions(rawInsts);
+    if (flatInsts.empty()) {
+        return flatInsts;
+    }
+
+    std::vector<Instruction> resizedInsts;
+    resizedInsts.reserve(numInstructions);
+    for (uint32_t i = 0; i < numInstructions; ++i) {
+        resizedInsts.push_back(flatInsts[i % flatInsts.size()]);
+    }
+    return resizedInsts;
