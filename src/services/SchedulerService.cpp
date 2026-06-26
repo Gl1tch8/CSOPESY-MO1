@@ -173,7 +173,7 @@ void SchedulerService::runCpuCore(int coreId) {
         }
 
         if (hasProcess && processPid >= 0) {
-            Process* process = SystemState::getInstance().getProcessByPid(processPid);
+            std::shared_ptr<Process> process = SystemState::getInstance().getProcessByPid(processPid);
            if (process) {
                 process->setState(ProcessState::READY);
                 process->setState(ProcessState::RUNNING);

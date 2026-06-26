@@ -111,5 +111,5 @@ std::string ScreenService::reportUtil() {
 }
 
 std::string ScreenMuxService::processSMI() {
-    
+    return "";
 }

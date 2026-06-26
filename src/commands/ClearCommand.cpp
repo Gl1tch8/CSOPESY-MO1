@@ -11,5 +11,9 @@ void ClearCommand::execute(std::string input) {
     this->print(log);
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
+    #if defined(_WIN32)
     system("cls"); //clear the screen
+    #elif defined(__linux__) || defined(__APPLE__)
+    system("clear");
+    #endif
 }
