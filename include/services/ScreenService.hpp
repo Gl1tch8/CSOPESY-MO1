@@ -30,7 +30,7 @@ public:
 
     //screen -r <pid>
     // reattaches the screen session with process info 
-    std::string reattachSessionProcess();
+    std::string reattachSessionProcess(std::string processName);
 
     std::string openSessionWindow(std::string processName);
     

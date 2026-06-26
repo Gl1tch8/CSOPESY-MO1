@@ -36,18 +36,19 @@ std::string ScreenService::executeFlags(std::string input) {
         if (tokens.size() < 3) {
             return "Error: screen -r requires a process name.";
         }
-        std::string name = tokens[2];
-        auto proc = SystemState::getInstance().getProcessByName(name);
-        if (!proc) {
-            return "Error: no process found with name " + name;
-        }
-        std::ostringstream out;
-        out << "Screen session: " << name << "\n";
-        out << "State: " << (proc->getIsFinished() ? "Finished" : "Running") << "\n";
-        out << "Progress: " << proc->getCurrentLine() << " / " << proc->getTotalLines() << "\n";
-        out << "--- Output ---\n";
-        out << proc->getOutput();
-        return out.str();
+        return reattachSessionProcess(tokens[2]);
+        // std::string name = tokens[2];
+        // auto proc = SystemState::getInstance().getProcessByName(name);
+        // if (!proc) {
+        //     return "Error: no process found with name " + name;
+        // }
+        // std::ostringstream out;
+        // out << "Screen session: " << name << "\n";
+        // out << "State: " << (proc->getIsFinished() ? "Finished" : "Running") << "\n";
+        // out << "Progress: " << proc->getCurrentLine() << " / " << proc->getTotalLines() << "\n";
+        // out << "--- Output ---\n";
+        // out << proc->getOutput();
+        // return out.str();
     }
 
     return "Error: Unrecognized screen flag '" + flag + "'";
@@ -85,8 +86,21 @@ std::string ScreenService::newSessionProcess() {
     return "Error: screen -s requires a process name.";
 }
 
-std::string ScreenService::reattachSessionProcess() {
-    return "Error: screen -r requires a process name.";
+// restore session
+std::string ScreenService::reattachSessionProcess(std::string processName) {
+    if (processName.empty()) {
+        return "Error: screen -r requires a process name.";
+    }
+    // must have existing session from -s
+    if (screens.find(processName) == screens.end()) {
+        return "Process " + processName + " not found.";
+    }
+    auto proc = SystemState::getInstance().getProcessByName(processName);
+    if (!proc || proc->getIsFinished()) {
+        return "Process " + processName + " not found.";
+    }
+    activeScreen = processName;
+    return "";
 }
 
 std::string ScreenService::openSessionWindow(std::string processName) {
@@ -94,13 +108,14 @@ std::string ScreenService::openSessionWindow(std::string processName) {
         return "Error: process name is required.";
     }
     auto proc = SystemState::getInstance().getProcessByName(processName);
-    if (!proc) {
+    if (!proc || proc->getIsFinished()) { // cant access finished processes
         return "Error: no process found with name " + processName;
     }
+    
+    screens[processName] = proc.get();
     activeScreen = processName;
     return ""; //screen loop is handled by main
 
-    // screens[processName] = nullptr;
     // return "Opened screen session for " + processName;
 }
 std::string ScreenService::getActiveScreen() const { return activeScreen; }
@@ -139,7 +154,7 @@ std::string ScreenMuxService::processSMI(const std::string& processName) {
     if (proc->getIsFinished()) {
         out << "Finished!\n";
     } else {
-        out << "Current instruction line: " << proc->getCurrentLine() << "\n";
+        out << "\nCurrent instruction line: " << proc->getCurrentLine() << "\n";
         out << "Lines of code: " << proc->getTotalLines() << "\n";
     }
 

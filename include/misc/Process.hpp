@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <sstream>
 #include <mutex>
+#include <chrono> 
+#include <ctime>
 
 #include "Core.hpp"
 #include "SymbolTable.hpp"

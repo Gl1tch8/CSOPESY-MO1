@@ -15,6 +15,8 @@ void ScreenCommand::execute(std::string input) {
     }
 
     // -s was called, enter screen loop
+    system("cls");
+    this->print(screenMuxService->processSMI(screenService->getActiveScreen()));
     while (screenService->hasActiveScreen()) {
         std::cout << "root:\\> ";
         std::getline(std::cin, input);

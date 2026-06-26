@@ -25,6 +25,9 @@ public:
     int getCoresAvailable() const;
     double getCpuUtilization() const;
 
+    void setCoreActive(int coreId, bool active);
+    void setCoreProcess(int coreId, Process* p);
+
     void addProcess(const Process& process);
     const std::vector<std::shared_ptr<Process>>& getRunningProcesses() const;
     const std::vector<std::shared_ptr<Process>>& getFinishedProcesses() const;

@@ -134,8 +134,7 @@ void SchedulerService::generateProcessor() {
             info.instructions = makeBlock(name, numInstructions, 0);
             info.totalLines = static_cast<int>(info.instructions.size());
 
-            info.coreId = nextCoreAssignment;
-            nextCoreAssignment = (nextCoreAssignment + 1) % static_cast<int>(config.cpuCount);
+            info.coreId = 0;
 
             {
                 std::unique_lock lock(queueMutex);
@@ -192,7 +191,10 @@ void SchedulerService::runCpuCore(int coreId) {
 
         if (hasProcess && processPid >= 0) {
             std::shared_ptr<Process> process = SystemState::getInstance().getProcessByPid(processPid);
-           if (process) {
+            if (process) {
+                SystemState::getInstance().setCoreActive(coreId, true);
+                SystemState::getInstance().setCoreProcess(coreId, process.get());
+
                 process->setState(ProcessState::READY);
                 process->setState(ProcessState::RUNNING);
 
@@ -206,6 +208,7 @@ void SchedulerService::runCpuCore(int coreId) {
                 int linesExecuted = 0;
                 int startIndex = process->getCurrentLineIndex();
                 
+                const auto& output = parser.getOutput(); // get output log immediately
                 for (int i = startIndex; i < static_cast<int>(instructions.size()) && running; ++i) {
                     parser.executeBlock({instructions[i]}, tick);
                     process->setCurrentLineIndex(i + 1);
@@ -232,6 +235,9 @@ void SchedulerService::runCpuCore(int coreId) {
                 } else {
                     process->setState(ProcessState::FINISHED);
                 }
+
+                SystemState::getInstance().setCoreActive(coreId, false);
+                SystemState::getInstance().setCoreProcess(coreId, nullptr);
             }
         } else {
             std::this_thread::sleep_for(std::chrono::milliseconds(1));

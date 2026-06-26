@@ -47,6 +47,18 @@ double SystemState::getCpuUtilization() const {
     return (static_cast<double>(running) / static_cast<double>(cores.size())) * 100.0;
 }
 
+void SystemState::setCoreActive(int coreId, bool active) {
+    if (coreId >= 0 && coreId < static_cast<int>(cores.size())) {
+        cores[coreId].setActive(active);
+    }
+}
+
+void SystemState::setCoreProcess(int coreId, Process* p) {
+    if (coreId >= 0 && coreId < static_cast<int>(cores.size())) {
+        cores[coreId].setActiveProcess(p);
+    }
+}
+
 // read only
 const std::vector<std::shared_ptr<Process>>& SystemState::getRunningProcesses() const {
     static std::vector<std::shared_ptr<Process>> list;

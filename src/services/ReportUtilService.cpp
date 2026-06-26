@@ -36,7 +36,6 @@ std::string ReportUtilService::executeFlags(std::string input) {
         return "Error: Could not open csopesy-log.txt for writing.";
     }
 
-    // todo: can add the datetime so we can identify logs
     outFile << "\n\n" << report;
     outFile.close();
 

@@ -87,7 +87,6 @@ int main()
         else if (command == "exit") {
 
             exitCommand->execute(input);
-            std::cout << "Exiting..." << std::endl;
 			isRunning = false;
         }
     }
