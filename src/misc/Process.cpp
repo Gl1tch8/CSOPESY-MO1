@@ -1,5 +1,10 @@
 #include "../../include/misc/Process.hpp"
+#include "../../include/misc/Helper.hpp"
 #include "Core.hpp"
+
+Process::Process(ProcessInfo info) : info(info) {
+    startTimeStr = Helper::getFormattedTime("%m/%d/%Y %I:%M:%S%p");
+}
 
 // Compatibility constructor
 Process::Process(std::string name, int pid, std::string startTime, int coreId, int currentLine, int totalLines, bool isFinished)
@@ -15,21 +20,8 @@ Process::Process(std::string name, int pid, std::string startTime, int coreId, i
     info.startTime = 0;
     info.endTime = 0;
 
-    // datetime of process
     if (startTimeStr.empty()) {
-        auto now = std::chrono::system_clock::now();
-        std::time_t t = std::chrono::system_clock::to_time_t(now);
-        std::tm tm{};
-        
-        #ifdef _WIN32
-            localtime_s(&tm, &t);
-        #else
-            localtime_r(&t, &tm);
-        #endif
-
-        char timeBuf[32];
-        std::strftime(timeBuf, sizeof(timeBuf), "%m/%d/%Y %I:%M:%S%p", &tm);
-        startTimeStr = std::string(timeBuf);
+        startTimeStr = Helper::getFormattedTime("%m/%d/%Y %I:%M:%S%p");
     }
 }
 
@@ -91,21 +83,10 @@ std::string Process::getStartTimeStr() const {
 }
 
 void Process::appendOutput(const std::string& line) {
-    // add Datetime to process logs
-    auto now = std::chrono::system_clock::now();
-    std::time_t t = std::chrono::system_clock::to_time_t(now);
-    std::tm tm{};
-    #ifdef _WIN32
-        localtime_s(&tm, &t);
-    #else
-        localtime_r(&t, &tm);
-    #endif
-
-    char timeBuf[32];
-    std::strftime(timeBuf, sizeof(timeBuf), "(%m/%d/%Y %I:%M:%S%p)", &tm);
+    std::string timeStr = Helper::getFormattedTime("(%m/%d/%Y %I:%M:%S%p)");
 
     std::ostringstream entry;
-    entry << timeBuf << " Core:" << info.coreId << " \"" << line << "\"";
+    entry << timeStr << " Core:" << info.coreId << " \"" << line << "\"";
 
     std::unique_lock lock(outputMutex);
     outputLog.push_back(entry.str());

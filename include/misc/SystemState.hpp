@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <vector>
 #include <mutex>
+#include <atomic>
 
 #include "Process.hpp"
 #include "Core.hpp"
@@ -17,8 +18,11 @@ public:
     bool isInitialized() const { return initialized; }
     void setInitialized(bool state) { initialized = state; }
 
-    void initializeCores(int count);
+    uint64_t getSystemTime() const { return globalTick.load(); }
+    void incrementSystemTime() { globalTick++; }
 
+    void initializeCores(int count);
+    
     int getNumCores() const;
     const int getActiveCores() const;
     int getCoresUsed() const;
@@ -46,6 +50,8 @@ private:
 
     bool initialized = false;
     
+    std::atomic<uint64_t> globalTick{0};
+
     std::vector<Core> cores;
     // std::vector no work bc Process has a mutex (unmovable)
     std::vector<std::shared_ptr<Process>> processes;

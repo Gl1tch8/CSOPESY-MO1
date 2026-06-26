@@ -110,10 +110,10 @@ void SchedulerService::generateProcessor() {
         return block;
     };
 
-    uint64_t tick = 0;
 
     while (generating) {
-        if (tick % config.batchProcessFreq == 0) {
+        uint64_t currentTick = SystemState::getInstance().getSystemTime();
+        if (currentTick % config.batchProcessFreq == 0) {
             int pid = static_cast<int>(processCounter++);
 
             std::ostringstream nameStream;
@@ -123,7 +123,7 @@ void SchedulerService::generateProcessor() {
             ProcessInfo info;
             info.pid = pid;
             info.name = name;
-            info.arrivalTime = tick;
+            info.arrivalTime = currentTick;
             info.burstTime = 0;
             info.startTime = 0;
             info.endTime = 0;
@@ -157,6 +157,7 @@ void SchedulerService::generateProcessor() {
                     }
                     info.coreId = shortestCore;
                 }
+                info.arrivalTime = currentTick;
 
                 // push to chosen q
                 if (info.coreId >= 0 && info.coreId < static_cast<int>(cpuReadyQueues.size())) {
@@ -168,7 +169,7 @@ void SchedulerService::generateProcessor() {
 
         }
 
-        ++tick;
+        SystemState::getInstance().incrementSystemTime();
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 }
@@ -192,15 +193,14 @@ void SchedulerService::runCpuCore(int coreId) {
         if (hasProcess && processPid >= 0) {
             std::shared_ptr<Process> process = SystemState::getInstance().getProcessByPid(processPid);
             if (process) {
+                // core init
                 SystemState::getInstance().setCoreActive(coreId, true);
                 SystemState::getInstance().setCoreProcess(coreId, process.get());
 
                 process->setState(ProcessState::READY);
                 process->setState(ProcessState::RUNNING);
 
-                uint64_t tick = 0;
                 InstructionParser parser(process->getSymbolTable(), running, process->getName());
-                
                 const auto& instructions = process->getInstructions();
 
                 // time quantum for rr
@@ -210,7 +210,8 @@ void SchedulerService::runCpuCore(int coreId) {
                 
                 const auto& output = parser.getOutput(); // get output log immediately
                 for (int i = startIndex; i < static_cast<int>(instructions.size()) && running; ++i) {
-                    parser.executeBlock({instructions[i]}, tick);
+                    uint64_t currentTick = SystemState::getInstance().getSystemTime();
+                    parser.executeBlock({instructions[i]}, currentTick);
                     process->setCurrentLineIndex(i + 1);
                     linesExecuted++;
 
@@ -234,6 +235,7 @@ void SchedulerService::runCpuCore(int coreId) {
                     cpuReadyQueues[coreId].push(*process); 
                 } else {
                     process->setState(ProcessState::FINISHED);
+                    process->setEndTime(SystemState::getInstance().getSystemTime());
                 }
 
                 SystemState::getInstance().setCoreActive(coreId, false);

@@ -59,7 +59,7 @@ struct ProcessInfo {
 
 class Process {
 public:
-    Process(ProcessInfo info) : info(info) {}
+    Process(ProcessInfo info);
 
     // copy constructor
     Process(const Process& other)
