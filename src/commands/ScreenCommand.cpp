@@ -1,4 +1,5 @@
 #include "../../include/commands/ScreenCommand.hpp"
+#include "tui/MainMenu.hpp"
 #include <iostream>
 #include <sstream>
 
@@ -21,7 +22,9 @@ void ScreenCommand::execute(std::string input) {
 
     std::string activeScreenName = screenService->getActiveScreen();
 
-    system("cls");
+    MainMenuTUI::clear();
+
+
     if (flag == "-r") {
         for (const auto& line : screenService->getSessionLogs(activeScreenName)) {
             std::cout << line;
@@ -37,6 +40,10 @@ void ScreenCommand::execute(std::string input) {
     while (screenService->hasActiveScreen()) {
         std::cout << "root:\\> ";
         std::getline(std::cin, input);
+        if (!std::cin) {                 // EOF / closed stdin: leave the screen instead of spinning
+            screenService->clearActiveScreen();
+            break;
+        }
         screenService->addSessionLog(activeScreenName, "root:\\> " + input + "\n");
 
         if (input == "process-smi") {

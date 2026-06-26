@@ -169,7 +169,6 @@ void SchedulerService::generateProcessor() {
 
         }
 
-        SystemState::getInstance().incrementSystemTime();
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 }
@@ -207,7 +206,11 @@ void SchedulerService::runCpuCore(int coreId) {
                 int quantum = (config.schedulingAlgo == "rr") ? config.quantumCycles : static_cast<int>(instructions.size());
                 int linesExecuted = 0;
                 int startIndex = process->getCurrentLineIndex();
-                
+
+                if (startIndex == 0) { // first execution: record start tick once
+                    process->setStartTime(SystemState::getInstance().getSystemTime());
+                }
+
                 const auto& output = parser.getOutput(); // get output log immediately
                 for (int i = startIndex; i < static_cast<int>(instructions.size()) && running; ++i) {
                     uint64_t currentTick = SystemState::getInstance().getSystemTime();

@@ -22,3 +22,11 @@
 
     
         };
+
+        void MainMenuTUI::clear() {
+                #if defined(_WIN32)
+                system("cls"); //clear the screen
+                #elif defined(__linux__) || defined(__APPLE__)
+                system("clear");
+                #endif
+        }

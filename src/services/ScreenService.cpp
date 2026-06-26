@@ -19,7 +19,6 @@ std::string ScreenService::executeFlags(std::string input) {
     if (tokens.size() < 2) {
         return "Error: screen command requires flags (e.g. screen -ls, screen -s <name>, screen -r <name>)";
     }
-
     std::string flag = tokens[1];
 
     if (flag == "-ls") {
@@ -30,6 +29,9 @@ std::string ScreenService::executeFlags(std::string input) {
             return "Error: screen -s requires a process name (e.g. screen -s process_name)";
         }
         std::string name = tokens[2];
+
+        if(this->screens.find(name) != screens.end())
+            return "Error: screen with process name:"+name+" already exists";
         return openSessionWindow(name);
     } 
         else if (flag == "-r") {

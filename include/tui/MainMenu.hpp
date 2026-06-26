@@ -1,4 +1,7 @@
+#pragma once
 class MainMenuTUI {
     public:
-        void printMainMenu();
+        static void printMainMenu();
+
+        static void clear();
 };

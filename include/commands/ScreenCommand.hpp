@@ -1,3 +1,4 @@
+#pragma once
 #include "../../src/interfaces/Command.hpp"
 #include "../../include/services/ScreenService.hpp"
 #include <vector>
