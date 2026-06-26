@@ -91,6 +91,18 @@ const std::vector<std::shared_ptr<Process>>& SystemState::getFinishedProcesses()
     return list;
 }
 
+const std::vector<std::shared_ptr<Process>>& SystemState::getAllProcesses() const {
+    static std::vector<std::shared_ptr<Process>> list;
+    list.clear();
+    std::shared_lock lock(processMutex);
+    for (const auto& p : this->processes) {
+        if (p) {
+            list.push_back(p);
+        }
+    }
+    return list;
+}
+
 
 
 void SystemState::addProcess(const Process& process) {

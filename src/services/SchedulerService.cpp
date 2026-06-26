@@ -1,6 +1,7 @@
 #include "../../include/services/SchedulerService.hpp"
 #include "../../include/misc/SystemState.hpp"
 #include "../../include/services/ConfigService.hpp"
+#include "../../include/misc/Helper.hpp"
 
 #include <thread>
 #include <chrono>
@@ -112,13 +113,47 @@ void SchedulerService::generateProcessor() {
 
 
     while (generating) {
+        // Schedule any externally added processes (e.g. from screen -s)
+        for (const auto& proc : SystemState::getInstance().getAllProcesses()) {
+            if (proc && proc->getState() == ProcessState::NEW) {
+                proc->setState(ProcessState::READY);
+
+                int coreId = 0;
+                {
+                    std::unique_lock lock(queueMutex);
+                    if (config.schedulingAlgo == "rr") {
+                        coreId = nextCoreAssignment;
+                        nextCoreAssignment = (nextCoreAssignment + 1) % static_cast<int>(config.cpuCount);
+                    } else if (config.schedulingAlgo == "fcfs") {
+                        int shortestCore = 0;
+                        size_t minSize = std::numeric_limits<size_t>::max();
+                        for (int i = 0; i < static_cast<int>(cpuReadyQueues.size()); ++i) {
+                            if (cpuReadyQueues[i].size() < minSize) {
+                                minSize = cpuReadyQueues[i].size();
+                                shortestCore = i;
+                            }
+                        }
+                        coreId = shortestCore;
+                    }
+                    proc->setCoreId(coreId);
+                    cpuReadyQueues[coreId].push(*proc);
+                }
+            }
+        }
+
         uint64_t currentTick = SystemState::getInstance().getSystemTime();
         if (currentTick % config.batchProcessFreq == 0) {
-            int pid = static_cast<int>(processCounter++);
+            int pid = static_cast<int>(SystemState::getInstance().getAllProcesses().size());
 
             std::ostringstream nameStream;
             nameStream << "p" << std::setfill('0') << std::setw(2) << pid;
             std::string name = nameStream.str();
+
+            if (SystemState::getInstance().getProcessByName(name) != nullptr) {
+                // If it already exists, sleep and continue next cycle
+                std::this_thread::sleep_for(std::chrono::milliseconds(1));
+                continue;
+            }
 
             ProcessInfo info;
             info.pid = pid;
@@ -130,8 +165,7 @@ void SchedulerService::generateProcessor() {
             info.currentLineIndex = 0;
             info.state = ProcessState::NEW;
 
-            int numInstructions = insDist(rng);
-            info.instructions = makeBlock(name, numInstructions, 0);
+            info.instructions = customInstructions(name, "instructions.txt", config.maxIns);
             info.totalLines = static_cast<int>(info.instructions.size());
 
             info.coreId = 0;

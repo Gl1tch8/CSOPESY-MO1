@@ -39,6 +39,7 @@ public:
     void addProcess(const Process& process);
     const std::vector<std::shared_ptr<Process>>& getRunningProcesses() const;
     const std::vector<std::shared_ptr<Process>>& getFinishedProcesses() const;
+    const std::vector<std::shared_ptr<Process>>& getAllProcesses() const;
 
     std::shared_ptr<Process> getProcessByPid(int pid);
     std::shared_ptr<Process> getProcessByName(const std::string& name);

@@ -32,6 +32,5 @@ private:
     mutable std::mutex queueMutex;
     
     // atomic cuz written from generator thread and read concurrently
-    std::atomic<uint32_t> processCounter = 1000;
     std::atomic<int> nextCoreAssignment = 0;
 };

@@ -1,5 +1,7 @@
 #include "../../include/services/ScreenService.hpp"
 #include "../../include/misc/SystemState.hpp"
+#include "../../include/misc/Helper.hpp"
+#include "../../include/services/ConfigService.hpp"
 
 #include <algorithm>
 #include <fstream>
@@ -30,9 +32,36 @@ std::string ScreenService::executeFlags(std::string input) {
         }
         std::string name = tokens[2];
 
-        if(this->screens.find(name) != screens.end())
-            return "Error: screen with process name:"+name+" already exists";
-        return openSessionWindow(name);
+        if (SystemState::getInstance().getProcessByName(name) != nullptr) {
+            return "Error: screen with process name:" + name + " already exists";
+        }
+
+        ConfigService configService;
+        configService.parseConfigFile();
+        Config config = configService.getConfig();
+        std::vector<Instruction> instrs = customInstructions(name, "instructions.txt", config.maxIns);
+        
+        int pid = static_cast<int>(SystemState::getInstance().getAllProcesses().size());
+        ProcessInfo info;
+        info.pid = pid;
+        info.name = name;
+        info.arrivalTime = SystemState::getInstance().getSystemTime();
+        info.burstTime = 0;
+        info.startTime = 0;
+        info.endTime = 0;
+        info.currentLineIndex = 0;
+        info.state = ProcessState::NEW;
+        info.instructions = instrs;
+        info.totalLines = static_cast<int>(instrs.size());
+        info.coreId = -1; // Unassigned initially
+
+        Process process(info);
+        SystemState::getInstance().addProcess(process);
+
+        auto registeredProcess = SystemState::getInstance().getProcessByName(name);
+        screens[name] = registeredProcess.get();
+        activeScreen = name;
+        return "";
     } 
         else if (flag == "-r") {
         if (tokens.size() < 3) {
@@ -93,14 +122,11 @@ std::string ScreenService::reattachSessionProcess(std::string processName) {
     if (processName.empty()) {
         return "Error: screen -r requires a process name.";
     }
-    // must have existing session from -s
-    if (screens.find(processName) == screens.end()) {
-        return "Process " + processName + " not found.";
-    }
     auto proc = SystemState::getInstance().getProcessByName(processName);
     if (!proc || proc->getIsFinished()) {
         return "Process " + processName + " not found.";
     }
+    screens[processName] = proc.get();
     activeScreen = processName;
     return "";
 }
