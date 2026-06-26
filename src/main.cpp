@@ -33,17 +33,19 @@ int main()
     Helper helper;
     
         InitializeService* initializeService = new InitializeService(); 
-        InitializeCommand* initializeCommand = new InitializeCommand(initializeService);
-ScreenService* screenService = new ScreenService();
-        ScreenCommand* screenCommand = new ScreenCommand(screenService);
-SchedulerService* schedulerService = new SchedulerService();
-        SchedulerCommand* schedulerCommand = new SchedulerCommand(schedulerService);
-ReportUtilService* reportUtilService = new ReportUtilService();
-        ReportUtilCommand* reportUtilCommand = new ReportUtilCommand(reportUtilService);
-ClearService* clearService = new ClearService();
-        ClearCommand* clearCommand = new ClearCommand(clearService);
-ExitService* exitService = new ExitService();
-        ExitCommand* exitCommand = new ExitCommand(exitService);
+                InitializeCommand* initializeCommand = new InitializeCommand(initializeService);
+        ScreenService* screenService = new ScreenService();
+                ScreenCommand* screenCommand = new ScreenCommand(screenService);
+        ScreenMuxService* screenMuxService = new ScreenMuxService();
+        SchedulerService* schedulerService = new SchedulerService();
+                SchedulerCommand* schedulerCommand = new SchedulerCommand(schedulerService);
+        ReportUtilService* reportUtilService = new ReportUtilService();
+                ReportUtilCommand* reportUtilCommand = new ReportUtilCommand(reportUtilService);
+        ClearService* clearService = new ClearService();
+                ClearCommand* clearCommand = new ClearCommand(clearService);
+        ExitService* exitService = new ExitService();
+                ExitCommand* exitCommand = new ExitCommand(exitService);
+
 
 
 

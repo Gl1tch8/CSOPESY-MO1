@@ -15,5 +15,7 @@ public:
 
     void execute(std::string input);
 
- 
+private:
+    ScreenService* screenService;
+    ScreenMuxService* screenMuxService;
 };

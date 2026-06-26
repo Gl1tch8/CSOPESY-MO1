@@ -93,10 +93,26 @@ std::string ScreenService::openSessionWindow(std::string processName) {
     if (processName.empty()) {
         return "Error: process name is required.";
     }
+    auto proc = SystemState::getInstance().getProcessByName(processName);
+    if (!proc) {
+        return "Error: no process found with name " + processName;
+    }
+    activeScreen = processName;
+    return ""; //screen loop is handled by main
 
-    screens[processName] = nullptr;
-    return "Opened screen session for " + processName;
+    // screens[processName] = nullptr;
+    // return "Opened screen session for " + processName;
 }
+std::string ScreenService::getActiveScreen() const { return activeScreen; }
+
+bool ScreenService::hasActiveScreen() const {
+    return !activeScreen.empty();
+}
+
+void ScreenService::clearActiveScreen() {
+    activeScreen.clear();
+}
+
 
 std::string ScreenService::reportUtil() {
     std::string report = listProcesses();
@@ -110,6 +126,22 @@ std::string ScreenService::reportUtil() {
     return "Report generated at csopesy-log.txt!";
 }
 
-std::string ScreenMuxService::processSMI() {
-    return "";
+std::string ScreenMuxService::processSMI(const std::string& processName) {
+    auto proc = SystemState::getInstance().getProcessByName(processName);
+    if (!proc) return "Error: process not found.";
+
+    std::ostringstream out;
+    out << "Process name: " << proc->getName() << "\n";
+    out << "ID: " << proc->getPid() << "\n";
+    out << "Logs:\n";
+    out << proc->getOutput();
+
+    if (proc->getIsFinished()) {
+        out << "Finished!\n";
+    } else {
+        out << "Current instruction line: " << proc->getCurrentLine() << "\n";
+        out << "Lines of code: " << proc->getTotalLines() << "\n";
+    }
+
+    return out.str();
 }

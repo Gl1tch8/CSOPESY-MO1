@@ -33,17 +33,26 @@ public:
     std::string reattachSessionProcess();
 
     std::string openSessionWindow(std::string processName);
+    
+    // process screens
+    bool hasActiveScreen() const;
+    void clearActiveScreen();
+    std::string getActiveScreen() const;
+
     private:
         //stores the process name and the process details as a pointer
         std::unordered_map<std::string, Process*> screens;
-
+        std::string activeScreen;
+        
+        // executes the block of instructions for a process, updating  symbol table and tick count
         void executeBlock(const std::vector<Instruction>& instructions, SymbolTable& sym, uint64_t& tick, std::atomic<bool>& running);
+        
 };
 
 class ScreenMuxService {
     public:
     // process smi command and return output log
-        std::string processSMI();
+        std::string processSMI(const std::string& processName);
     // prints process smi output
         std::string processSMIOutput();
     // exit screen mux

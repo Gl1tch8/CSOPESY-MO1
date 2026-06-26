@@ -180,9 +180,14 @@ void SchedulerService::runCpuCore(int coreId) {
 
                 uint64_t tick = 0;
                 InstructionParser parser(process->getSymbolTable(), running, process->getName());
-                parser.executeBlock(process->getInstructions(), tick);
+                
+                // exe and update running process 
+                const auto& instructions = process->getInstructions();
+                for (int i = 0; i < static_cast<int>(instructions.size()) && running; ++i) {
+                    parser.executeBlock({instructions[i]}, tick);
+                    process->setCurrentLineIndex(i + 1);
+                }
 
-                // Store output back into process
                 for (const auto& line : parser.getOutput()) {
                     process->appendOutput(line);
                 }

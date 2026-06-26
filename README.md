@@ -20,6 +20,10 @@ Entry class file: -
 processes got changed to a shared ptr to change everythig accordingly. reference is SystemState.cpp, screnservice
 - fix reportUtilService.cpp
 
+- initialize: nothing should work until initialized
+- screen -ls: cpu core usage
+- screen -s, process-smi
+
 ### Demo notes:
 - video quality must be 480p - 720p
 - max size: 1GB
