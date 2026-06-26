@@ -18,10 +18,12 @@ Entry class file: -
 
 ## TODO:
 / initialize: nothing should work until initialized
-- screen -r should show history
+/ screen -r should show history
 - process should show datetime spawned
 / screen -ls: cpu core usage
 / screen -s, process-smi
+- update starttime and endtime of process
+- screen -s error handling (if screen alr exists for process)
 
 ### Demo notes:
 - video quality must be 480p - 720p

@@ -141,6 +141,18 @@ std::string ScreenService::reportUtil() {
     return "Report generated at csopesy-log.txt!";
 }
 
+void ScreenService::addSessionLog(const std::string& processName, const std::string& log) {
+    sessionLogs[processName].push_back(log);
+}
+
+std::vector<std::string> ScreenService::getSessionLogs(const std::string& processName) const {
+    auto it = sessionLogs.find(processName);
+    if (it != sessionLogs.end()) {
+        return it->second;
+    }
+    return {};
+}
+
 std::string ScreenMuxService::processSMI(const std::string& processName) {
     auto proc = SystemState::getInstance().getProcessByName(processName);
     if (!proc) return "Error: process not found.";

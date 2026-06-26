@@ -1,5 +1,6 @@
 #include "../../include/commands/ScreenCommand.hpp"
 #include <iostream>
+#include <sstream>
 
 ScreenCommand::ScreenCommand(ScreenService* service) : Command(*service), screenService(service), screenMuxService(new ScreenMuxService()) {}
 
@@ -14,20 +15,37 @@ void ScreenCommand::execute(std::string input) {
         return;
     }
 
-    // -s was called, enter screen loop
+    std::stringstream ss(input);
+    std::string cmd, flag;
+    ss >> cmd >> flag;
+
+    std::string activeScreenName = screenService->getActiveScreen();
+
     system("cls");
-    this->print(screenMuxService->processSMI(screenService->getActiveScreen()));
+    if (flag == "-r") {
+        for (const auto& line : screenService->getSessionLogs(activeScreenName)) {
+            std::cout << line;
+        }
+    }
+
+    // restore session history
+    auto logAndPrint = [&](const std::string& text) {
+        std::cout << text << std::endl;
+        screenService->addSessionLog(activeScreenName, text + "\n");
+    };
+
     while (screenService->hasActiveScreen()) {
         std::cout << "root:\\> ";
         std::getline(std::cin, input);
+        screenService->addSessionLog(activeScreenName, "root:\\> " + input + "\n");
 
         if (input == "process-smi") {
-            this->print(screenMuxService->processSMI(screenService->getActiveScreen()));
+            logAndPrint(screenMuxService->processSMI(activeScreenName));
         } else if (input == "exit") {
             screenService->clearActiveScreen();
             std::cout << "Returning to main menu...\n";
         } else {
-            std::cout << "Unknown command. Use 'process-smi' or 'exit'.\n";
+            logAndPrint("Unknown command. Use 'process-smi' or 'exit'.");
         }
     }
 }
