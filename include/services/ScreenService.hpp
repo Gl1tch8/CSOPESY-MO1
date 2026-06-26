@@ -48,7 +48,6 @@ public:
 
     private:
         //stores the process name and the process details as a pointer
-        std::unordered_map<std::string, Process*> screens;
         std::string activeScreen;
         // scheduler used to create + enqueue processes for "screen -s"
         SchedulerService* scheduler = nullptr;

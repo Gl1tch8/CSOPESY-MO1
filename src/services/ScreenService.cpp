@@ -32,8 +32,7 @@ std::string ScreenService::executeFlags(std::string input) {
         std::string name = tokens[2];
 
         // reject duplicates: an existing process (running or finished) or an open session
-        if (SystemState::getInstance().getProcessByName(name) != nullptr ||
-            this->screens.find(name) != screens.end()) {
+        if (SystemState::getInstance().getProcessByName(name) != nullptr) {
             return "Error: process " + name + " already exists.";
         }
 
@@ -109,10 +108,7 @@ std::string ScreenService::reattachSessionProcess(std::string processName) {
     if (processName.empty()) {
         return "Error: screen -r requires a process name.";
     }
-    // must have existing session from -s
-    if (screens.find(processName) == screens.end()) {
-        return "Process " + processName + " not found.";
-    }
+
     auto proc = SystemState::getInstance().getProcessByName(processName);
     if (!proc || proc->getIsFinished()) {
         return "Process " + processName + " not found.";
@@ -130,7 +126,6 @@ std::string ScreenService::openSessionWindow(std::string processName) {
         return "Error: no process found with name " + processName;
     }
     
-    screens[processName] = proc.get();
     activeScreen = processName;
     return ""; //screen loop is handled by main
 
