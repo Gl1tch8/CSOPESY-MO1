@@ -81,6 +81,7 @@ void SchedulerService::run() {}
 std::vector<Instruction> SchedulerService::generateInstructions(const std::string& name) {
     std::lock_guard<std::mutex> guard(genMutex); // rng shared with generator thread
 
+    /* ORIG INSTR RANDOMIZATION
     std::uniform_int_distribution<int> insDist(config.minIns, config.maxIns);
     std::uniform_int_distribution<int> opDist(0, 4); // DECLARE, PRINT, ADD, SUBTRACT, SLEEP
     std::uniform_int_distribution<int> valDist(0, 100);
@@ -153,6 +154,26 @@ std::vector<Instruction> SchedulerService::generateInstructions(const std::strin
 
     int numInstructions = insDist(rng);
     return makeBlock(name, numInstructions, 0);
+    ORIGINAL WORKLOAD GENERATION CODE END */
+
+    // CUSTOM INSTR GENERATION
+    std::uniform_int_distribution<int> insDist(config.minIns, config.maxIns);
+    std::uniform_int_distribution<int> addValDist(1, 10);
+
+    int numInstructions = insDist(rng);
+    std::vector<Instruction> instructions;
+    for (int k = 0; k < numInstructions; ++k) {
+        Instruction instr;
+        if (k % 2 == 0) {
+            instr.opCode = OperationCode::PRINT;
+            instr.operands = {"\"Value from: \" +x"};
+        } else {
+            instr.opCode = OperationCode::ADD;
+            instr.operands = {"x", "x", std::to_string(addValDist(rng))};
+        }
+        instructions.push_back(instr);
+    }
+    return instructions;
 }
 
 void SchedulerService::enqueueProcess(ProcessInfo info) {
@@ -280,12 +301,19 @@ void SchedulerService::runCpuCore(int coreId) {
                     process->setStartTime(SystemState::getInstance().getSystemTime());
                 }
 
-                const auto& output = parser.getOutput(); // get output log immediately
+                size_t processedLogsCount = 0;
                 for (int i = startIndex; i < static_cast<int>(instructions.size()) && running; ++i) {
                     uint64_t currentTick = SystemState::getInstance().getSystemTime();
                     parser.executeBlock({instructions[i]}, currentTick);
                     process->setCurrentLineIndex(i + 1);
                     linesExecuted++;
+
+                    // append any new output logs immediately right after exec
+                    const auto& currentOutput = parser.getOutput();
+                    while (processedLogsCount < currentOutput.size()) {
+                        process->appendOutput(currentOutput[processedLogsCount]);
+                        processedLogsCount++;
+                    }
 
                     if (config.delayPerSec > 0) {
                         std::this_thread::sleep_for(std::chrono::milliseconds(config.delayPerSec));
@@ -294,10 +322,6 @@ void SchedulerService::runCpuCore(int coreId) {
                     if (linesExecuted >= quantum) {
                         break; // time-quantum limit
                     }
-                }
-
-                for (const auto& line : parser.getOutput()) {
-                    process->appendOutput(line);
                 }
 
                 if (process->getCurrentLineIndex() < static_cast<int>(instructions.size())) { // is process done?
