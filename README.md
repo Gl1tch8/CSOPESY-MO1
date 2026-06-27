@@ -7,31 +7,20 @@ Avelino, Sophia Kylie G.
 Chua, Renzo Sheldon Trevor K.
 Liong, John Lawrence O.
 
-Instructions: -
-Entry class file: -
-_Add a README.txt with your name and instructions on running your program. Also, indicate the entry class file where the main function is located. An alternative can be a GitHub link._
+Entry class file: `src/main.cpp`
 
 ---
+# Instructions
+## How to run on terminal
+1. Run `cmake ..` in the build directory
+2. Run `make` inside build
+3. Include the config.txt next to csopesy_mo1.exe
+4. run csopesy_mo1.exe in build
 
-1. Delete csopesy-log.txt before starting
+## How to run on Visual Studio Code
+1. The following repository depends on MSYS2 UCRT64. Refer to **Dependencies for more information**
+2. Click build and run
 
-- csoesy-log.txt doesnt overwrite but appends. can change in reportUtilService.cpp.
-
-2. Ctrl shift b to build, then press run
-
-## TODO:
-
-[x] initialize: nothing should work until initialized
-[x] screen -r should show history
-[x] process should show datetime spawned
-[x] screen -ls: cpu core usage
-[x] screen -s, process-smi
-[x] update starttime and endtime of process (not sure if works)
-[x] screen -s error handling (if screen alr exists for process)
-[ ] PRINT should show symbol table var
-
-### Demo notes:
-
-- video quality must be 480p - 720p
-- max size: 1GB
-- show you pressing Run/Debug from IDE
+## Dependencies
+1. For Visual Studio Code, install MSYS2
+2. run `pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-make` inside the MSYS2 terminal to install the necessary packages
