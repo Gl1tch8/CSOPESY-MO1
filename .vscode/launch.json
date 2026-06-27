@@ -2,14 +2,15 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Run CSOPESY (new terminal)",
-            "type": "cppvsdbg",
+            "name": "Run CSOPESY",
+            "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\build\\csopesy_mo1.exe",
+            "program": "${workspaceFolder}/build/csopesy_mo1",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "console": "externalTerminal",
+            "externalConsole": true,
+            "MIMode": "lldb",
             "preLaunchTask": "build-app"
         }
     ]
