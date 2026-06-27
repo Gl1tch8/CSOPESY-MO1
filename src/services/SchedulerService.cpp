@@ -81,7 +81,8 @@ void SchedulerService::run() {}
 std::vector<Instruction> SchedulerService::generateInstructions(const std::string& name) {
     std::lock_guard<std::mutex> guard(genMutex); // rng shared with generator thread
 
-    /* ORIG INSTR RANDOMIZATION
+    // INSTR RANDOMIZATION
+    
     std::uniform_int_distribution<int> insDist(config.minIns, config.maxIns);
     std::uniform_int_distribution<int> opDist(0, 4); // DECLARE, PRINT, ADD, SUBTRACT, SLEEP
     std::uniform_int_distribution<int> valDist(0, 100);
@@ -154,9 +155,10 @@ std::vector<Instruction> SchedulerService::generateInstructions(const std::strin
 
     int numInstructions = insDist(rng);
     return makeBlock(name, numInstructions, 0);
-    ORIGINAL WORKLOAD GENERATION CODE END */
+   
 
-    // CUSTOM INSTR GENERATION
+/*    
+// CUSTOM INSTR GENERATION
     std::uniform_int_distribution<int> insDist(config.minIns, config.maxIns);
     std::uniform_int_distribution<int> addValDist(1, 10);
 
@@ -174,6 +176,7 @@ std::vector<Instruction> SchedulerService::generateInstructions(const std::strin
         instructions.push_back(instr);
     }
     return instructions;
+    */
 }
 
 void SchedulerService::enqueueProcess(ProcessInfo info) {
