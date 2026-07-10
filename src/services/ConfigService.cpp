@@ -22,6 +22,14 @@ void ConfigService::parseConfigFile() {
         }
     };
 
+    auto parseU64 = [](const std::string& v, uint64_t fallback) -> uint64_t {
+        try {
+            return static_cast<uint64_t>(std::stoull(v));
+        } catch (...) {
+            return fallback;
+        }
+    };
+
     while (file >> key >> value) {
         if (!value.empty() && value.front() == '"' && value.back() == '"') {
             value = value.substr(1, value.size() - 2);
@@ -41,6 +49,12 @@ void ConfigService::parseConfigFile() {
             config.maxIns = parseUint(value, config.maxIns);
         } else if (key == "delay-per-exec") {
             config.delayPerSec = parseUint(value, config.delayPerSec);
+        } else if (key == "max-overall-mem") {
+            config.maxOverallMem = parseU64(value, config.maxOverallMem);
+        } else if (key == "mem-per-frame") {
+            config.memPerFrame = parseUint(value, config.memPerFrame);
+        } else if (key == "mem-per-proc") {
+            config.memPerProc = parseU64(value, config.memPerProc);
         }
     }
 
@@ -64,6 +78,13 @@ void ConfigService::validate() {
 
     config.minIns = std::clamp<uint32_t>(config.minIns, 1, MAX_INS);
     config.maxIns = std::clamp<uint32_t>(config.maxIns, config.minIns, MAX_INS);
+
+    config.maxOverallMem = std::max<uint64_t>(config.maxOverallMem, 1);
+    config.memPerFrame   = std::max<uint32_t>(config.memPerFrame, 1);
+    // A process that needs more memory than physically exists could never be
+    // scheduled and would spin forever at the tail of its ready queue. Clamp
+    // rather than let that happen silently.
+    config.memPerProc = std::clamp<uint64_t>(config.memPerProc, 1, config.maxOverallMem);
 }
 
 const Config ConfigService::getConfig() const {

@@ -38,6 +38,7 @@ int main()
         std::cout << "root:\\>";
         std::getline(std::cin, input);
         if (!std::cin) {                 // EOF / closed stdin: stop instead of spinning
+            schedulerService->shutdown();
             state.stop();
             isRunning = false;
             break;
@@ -78,6 +79,7 @@ int main()
             reportUtilCommand->execute(input);
         } else if (command == "exit") {
 
+            schedulerService->shutdown(); // signal + join scheduler threads before exiting
             state.stop();               // signal + join the tick thread before exiting
             exitCommand->execute(input);
 			isRunning = false;

@@ -11,6 +11,10 @@ struct Config {
     uint32_t minIns           = 1000;
     uint32_t maxIns           = 2000;
     uint32_t delayPerSec      = 0;
+
+    uint64_t maxOverallMem    = 16384; // bytes; total contiguous main-memory arena size
+    uint32_t memPerFrame      = 16;    // bytes; unused by the first-fit contiguous allocator — parsed/stored only, for a future paging assignment
+    uint64_t memPerProc       = 4096;  // bytes; fixed size every process requests
 };
 
 class ConfigService {

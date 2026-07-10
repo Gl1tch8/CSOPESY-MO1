@@ -1,5 +1,6 @@
 #include "../../src/interfaces/Service.hpp"
 #include "../../include/misc/Process.hpp"
+#include "../../include/misc/MemoryAllocator.hpp"
 #include "ConfigService.hpp"
 #include <string>
 #include <atomic>
@@ -20,6 +21,12 @@ public:
     void stop();
     void run();
 
+    // stop and join every background thread (cores + snapshot writer). Must
+    // be called before program exit — otherwise these threads keep polling
+    // the SystemState singleton while it's torn down during static
+    // destruction, which is a use-after-destruction race.
+    void shutdown();
+
     // create a single named process and enqueue it for execution.
     // returns "" on success, or an error message on failure.
     std::string createProcess(const std::string& name);
@@ -34,6 +41,11 @@ private:
     // assign a core (per scheduling algo) and enqueue the process for execution
     void enqueueProcess(ProcessInfo info);
 
+    // periodically (every quantum-cycles global ticks) dump memory state to
+    // memory_stamp_<qq>.txt
+    void snapshotWriter();
+    void writeMemorySnapshot(uint64_t qq);
+
     Config config;
 
     std::atomic<bool> running = false;
@@ -41,6 +53,10 @@ private:
     std::vector<std::thread> cpuThreads;
     std::thread generatorThread;
     mutable std::mutex queueMutex;
+
+    MemoryAllocator memoryAllocator;
+    std::thread snapshotThread;
+    std::atomic<uint64_t> snapshotCounter = 0;
     
     // atomic cuz written from generator thread and read concurrently
     std::atomic<uint32_t> processCounter = 1000;

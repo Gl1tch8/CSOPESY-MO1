@@ -1,6 +1,7 @@
 #include "../../include/services/SchedulerService.hpp"
 #include "../../include/misc/SystemState.hpp"
 #include "../../include/services/ConfigService.hpp"
+#include "../../include/misc/Helper.hpp"
 
 #include <thread>
 #include <chrono>
@@ -8,6 +9,7 @@
 #include <iomanip>
 #include <sstream>
 #include <algorithm>
+#include <fstream>
 
 SchedulerService::SchedulerService() : Service() {}
 
@@ -34,6 +36,7 @@ void SchedulerService::initScheduler() {
     configService.parseConfigFile();
 
     config = configService.getConfig();
+    memoryAllocator.configure(config.maxOverallMem);
 
     SystemState::getInstance().initializeCores(config.cpuCount);
     cpuReadyQueues.resize(config.cpuCount);
@@ -45,6 +48,8 @@ void SchedulerService::initScheduler() {
     for (int i = 0; i < static_cast<int>(config.cpuCount); ++i) {
         cpuThreads.emplace_back(&SchedulerService::runCpuCore, this, i);
     }
+
+    snapshotThread = std::thread(&SchedulerService::snapshotWriter, this);
 }
 
 void SchedulerService::start() {
@@ -74,6 +79,23 @@ void SchedulerService::stop() {
     // }
 
     // cpuThreads.clear();
+}
+
+void SchedulerService::shutdown() {
+    generating = false;
+    if (generatorThread.joinable()) {
+        generatorThread.join();
+    }
+
+    running = false;
+    for (auto& t : cpuThreads) {
+        if (t.joinable()) {
+            t.join();
+        }
+    }
+    if (snapshotThread.joinable()) {
+        snapshotThread.join();
+    }
 }
 
 void SchedulerService::run() {}
@@ -285,6 +307,22 @@ void SchedulerService::runCpuCore(int coreId) {
         if (hasProcess && processPid >= 0) {
             std::shared_ptr<Process> process = SystemState::getInstance().getProcessByPid(processPid);
             if (process) {
+                // memory gate: acquire (fixed-size) residency before running.
+                // Held for the process's entire lifetime once granted, so this
+                // is a no-op on every later quantum resumption.
+                if (!memoryAllocator.isResident(processPid) &&
+                    !memoryAllocator.allocate(processPid, process->getName(), config.memPerProc)) {
+                    // memory full: no backing store — go to the tail of this
+                    // core's ready queue and retry later, consuming no quantum.
+                    process->setState(ProcessState::READY);
+                    {
+                        std::unique_lock lock(queueMutex);
+                        cpuReadyQueues[coreId].push(*process);
+                    }
+                    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+                    continue;
+                }
+
                 // core init
                 SystemState::getInstance().setCoreActive(coreId, true);
                 SystemState::getInstance().setCoreProcess(coreId, process.get());
@@ -335,6 +373,7 @@ void SchedulerService::runCpuCore(int coreId) {
                 } else {
                     process->setState(ProcessState::FINISHED);
                     process->setEndTime(SystemState::getInstance().getSystemTime());
+                    memoryAllocator.deallocate(processPid);
                 }
 
                 SystemState::getInstance().setCoreActive(coreId, false);
@@ -343,5 +382,45 @@ void SchedulerService::runCpuCore(int coreId) {
         } else {
             std::this_thread::sleep_for(std::chrono::milliseconds(1));
         }
+    }
+}
+
+void SchedulerService::snapshotWriter() {
+    uint64_t lastSnapshotTick = UINT64_MAX; // sentinel so tick 0 fires exactly once
+    while (running) {
+        uint64_t currentTick = SystemState::getInstance().getSystemTime();
+
+        // edge-triggered: fires exactly once per distinct tick value, unlike
+        // generateProcessor's batch-process-freq check which can re-fire on
+        // every 1ms poll while the tick value is unchanged
+        if (currentTick % config.quantumCycles == 0 && currentTick != lastSnapshotTick) {
+            lastSnapshotTick = currentTick;
+            writeMemorySnapshot(snapshotCounter++);
+        }
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    }
+}
+
+void SchedulerService::writeMemorySnapshot(uint64_t qq) {
+    auto blocks = memoryAllocator.snapshotBlocks(); // ascending base order
+
+    std::ostringstream ss;
+    ss << "Timestamp: " << Helper::getFormattedTime("(%m/%d/%Y %I:%M:%S%p)") << "\n";
+    ss << "Number of processes in memory: " << memoryAllocator.residentProcessCount() << "\n";
+    // label says "in KB" per the assignment's worked example, but the value
+    // printed is the raw byte count, unconverted
+    ss << "Total external fragmentation in KB: " << memoryAllocator.totalFragmentation() << "\n\n";
+
+    ss << "----end---- = " << memoryAllocator.getTotalSize() << "\n\n";
+    for (auto it = blocks.rbegin(); it != blocks.rend(); ++it) { // highest address first
+        if (it->free) continue; // unallocated gaps are implicit, never printed
+        ss << (it->base + it->size) << "\n" << it->name << "\n" << it->base << "\n\n";
+    }
+    ss << "----start----- = 0\n";
+
+    std::ofstream outFile("memory_stamp_" + std::to_string(qq) + ".txt");
+    if (outFile.is_open()) {
+        outFile << ss.str();
     }
 }
