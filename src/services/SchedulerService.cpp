@@ -108,8 +108,8 @@ std::vector<Instruction> SchedulerService::generateInstructions(const std::strin
     std::uniform_int_distribution<int> insDist(config.minIns, config.maxIns);
     std::uniform_int_distribution<int> opDist(0, 4); // DECLARE, PRINT, ADD, SUBTRACT, SLEEP
     std::uniform_int_distribution<int> valDist(0, 100);
-    std::uniform_int_distribution<uint8_t> sleepDist(1, 10);
-    std::uniform_int_distribution<uint8_t> repeatDist(2, 5);
+    std::uniform_int_distribution<int> sleepDist(1, 10);
+    std::uniform_int_distribution<int> repeatDist(2, 5);
     std::uniform_int_distribution<int> forChance(0, 4); // 1 in 5 chance of FOR
 
     const std::vector<std::string> varPool = {"x", "y", "z"};

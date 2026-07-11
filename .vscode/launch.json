@@ -3,14 +3,13 @@
     "configurations": [
         {
             "name": "Run CSOPESY",
-            "type": "cppdbg",
+            "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/csopesy_mo1",
+            "program": "${workspaceFolder}/build/Debug/csopesy_mo1.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "externalConsole": true,
-            "MIMode": "lldb",
             "preLaunchTask": "build-app"
         }
     ]
