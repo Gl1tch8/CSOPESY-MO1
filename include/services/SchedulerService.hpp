@@ -1,6 +1,6 @@
 #include "../../src/interfaces/Service.hpp"
 #include "../../include/misc/Process.hpp"
-#include "../../include/misc/MemoryAllocator.hpp"
+#include "../../include/misc/MemoryManager.hpp"
 #include "ConfigService.hpp"
 #include <string>
 #include <atomic>
@@ -31,6 +31,9 @@ public:
     // returns "" on success, or an error message on failure.
     std::string createProcess(const std::string& name);
 
+    // read-only access for VmstatService (needs frame occupancy + counters)
+    const MemoryManager& getMemoryManager() const { return memoryManager; }
+
 private:
     void generateProcessor();
     void runCpuCore(int coreId);
@@ -54,7 +57,7 @@ private:
     std::thread generatorThread;
     mutable std::mutex queueMutex;
 
-    MemoryAllocator memoryAllocator;
+    MemoryManager memoryManager;
     std::thread snapshotThread;
     std::atomic<uint64_t> snapshotCounter = 0;
     

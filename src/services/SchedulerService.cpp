@@ -36,7 +36,7 @@ void SchedulerService::initScheduler() {
     configService.parseConfigFile();
 
     config = configService.getConfig();
-    memoryAllocator.configure(config.maxOverallMem);
+    memoryManager.configure(config.maxOverallMem, config.memPerFrame);
 
     SystemState::getInstance().initializeCores(config.cpuCount);
     cpuReadyQueues.resize(config.cpuCount);
@@ -310,8 +310,8 @@ void SchedulerService::runCpuCore(int coreId) {
                 // memory gate: acquire (fixed-size) residency before running.
                 // Held for the process's entire lifetime once granted, so this
                 // is a no-op on every later quantum resumption.
-                if (!memoryAllocator.isResident(processPid) &&
-                    !memoryAllocator.allocate(processPid, process->getName(), config.memPerProc)) {
+                if (!memoryManager.isResident(processPid) &&
+                    !memoryManager.allocate(processPid, process->getName(), config.memPerProc)) {
                     // memory full: no backing store — go to the tail of this
                     // core's ready queue and retry later, consuming no quantum.
                     process->setState(ProcessState::READY);
@@ -373,7 +373,7 @@ void SchedulerService::runCpuCore(int coreId) {
                 } else {
                     process->setState(ProcessState::FINISHED);
                     process->setEndTime(SystemState::getInstance().getSystemTime());
-                    memoryAllocator.deallocate(processPid);
+                    memoryManager.deallocate(processPid);
                 }
 
                 SystemState::getInstance().setCoreActive(coreId, false);
@@ -403,19 +403,24 @@ void SchedulerService::snapshotWriter() {
 }
 
 void SchedulerService::writeMemorySnapshot(uint64_t qq) {
-    auto blocks = memoryAllocator.snapshotBlocks(); // ascending base order
+    auto frames = memoryManager.snapshotFrames(); // ascending frame index
 
     std::ostringstream ss;
     ss << "Timestamp: " << Helper::getFormattedTime("(%m/%d/%Y %I:%M:%S%p)") << "\n";
-    ss << "Number of processes in memory: " << memoryAllocator.residentProcessCount() << "\n";
+    ss << "Number of processes in memory: " << memoryManager.residentProcessCount() << "\n";
     // label says "in KB" per the assignment's worked example, but the value
     // printed is the raw byte count, unconverted
-    ss << "Total external fragmentation in KB: " << memoryAllocator.totalFragmentation() << "\n\n";
+    ss << "Total free memory in KB: " << memoryManager.totalFragmentation() << "\n";
+    ss << "Total internal fragmentation in KB: " << memoryManager.totalInternalFragmentation() << "\n";
+    ss << "Pages paged in: " << memoryManager.getNumPagedIn() << "\n";
+    ss << "Pages paged out: " << memoryManager.getNumPagedOut() << "\n\n";
 
-    ss << "----end---- = " << memoryAllocator.getTotalSize() << "\n\n";
-    for (auto it = blocks.rbegin(); it != blocks.rend(); ++it) { // highest address first
-        if (it->free) continue; // unallocated gaps are implicit, never printed
-        ss << (it->base + it->size) << "\n" << it->name << "\n" << it->base << "\n\n";
+    ss << "----end---- = " << memoryManager.getTotalSize() << "\n\n";
+    for (auto it = frames.rbegin(); it != frames.rend(); ++it) { // highest frame first
+        if (!it->occupied) continue; // unallocated frames are implicit, never printed
+        uint64_t base = static_cast<uint64_t>(it->frameIndex) * config.memPerFrame;
+        uint64_t end = base + config.memPerFrame;
+        ss << end << "\n" << it->processName << " (page " << it->ownerPage << ")\n" << base << "\n\n";
     }
     ss << "----start----- = 0\n";
 

@@ -6,8 +6,10 @@
 #include "commands/ReportUtilCommand.hpp"
 #include "commands/SchedulerCommand.hpp"
 #include "commands/ScreenCommand.hpp"
+#include "commands/VmstatCommand.hpp"
 
 #include "services/ReportUtilService.hpp"
+#include "services/VmstatService.hpp"
 
 
 #include "misc/Helper.hpp"

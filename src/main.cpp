@@ -21,6 +21,9 @@ int main()
     SchedulerService* schedulerService = new SchedulerService();
     SchedulerCommand* schedulerCommand = new SchedulerCommand(schedulerService);
     screenService->setScheduler(schedulerService); // screen -s creates processes via the scheduler
+    VmstatService* vmstatService = new VmstatService();
+    VmstatCommand* vmstatCommand = new VmstatCommand(vmstatService);
+    vmstatService->setScheduler(schedulerService);
     ReportUtilService* reportUtilService = new ReportUtilService();
     ReportUtilCommand* reportUtilCommand = new ReportUtilCommand(reportUtilService);
     ClearService* clearService = new ClearService();
@@ -77,6 +80,8 @@ int main()
         }
         else if (command == "report-util") {
             reportUtilCommand->execute(input);
+        } else if (command == "vmstat") {
+            vmstatCommand->execute(input);
         } else if (command == "exit") {
 
             schedulerService->shutdown(); // signal + join scheduler threads before exiting
